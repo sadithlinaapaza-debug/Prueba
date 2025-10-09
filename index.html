@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repositorio de Ejercicios Python</title>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-color: #f7f9fb;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #004080;
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+    }
+    .card {
+        background-color: white;
+        width: 360px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        overflow: hidden;
+    }
+    .card h3 {
+        color: #003366;
+        border-bottom: 2px solid #004080;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+    pre {
+        background-color: #f3f4f6;
+        padding: 10px;
+        border-radius: 8px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-family: "Consolas", monospace;
+        font-size: 14px;
+    }
+    footer {
+        text-align: center;
+        background-color: #004080;
+        color: white;
+        padding: 10px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<header>Repositorio de 43 Ejemplos y Tareas - Programación en Python</header>
+
+<div class="container">
+
+    <!-- Ejemplo 1 -->
+    <div class="card">
+        <h3>Ejemplo 1: Hola Mundo</h3>
+        <pre><code class="language-python">
+print("Hola Mundo")
+        </code></pre>
+    </div>
+
+    <!-- Ejemplo 2 -->
+    <div class="card">
+        <h3>Ejemplo 2: Suma de dos números</h3>
+        <pre><code class="language-python">
+a = int(input("Ingrese el primer número: "))
+b = int(input("Ingrese el segundo número: "))
+print("La suma es:", a + b)
+        </code></pre>
+    </div>
+
+    <!-- ... Aquí continúan los demás ejemplos ... -->
+
+    <!-- Constructor -->
+    <div class="card">
+        <h3>Constructor</h3>
+        <pre><code class="language-python">
+import math
+
+class TrianguloRectangulo:
+    def __init__(self, cateto_a, cateto_b):  # Constructor
+        self.cateto_a = cateto_a
+        self.cateto_b = cateto_b
+
+    def calcular_hipotenusa(self):
+        hipotenusa = math.sqrt(self.cateto_a**2 + self.cateto_b**2)
+        return hipotenusa
+
+def main():
+    cateto1 = float(input("Ingrese el valor del primer cateto: "))
+    cateto2 = float(input("Ingrese el valor del segundo cateto: "))
+
+    triangulo = TrianguloRectangulo(cateto1, cateto2)
+    resultado = triangulo.calcular_hipotenusa()
+
+    print(f"La hipotenusa del triángulo es {resultado}")
+
+if __name__ == "__main__":
+    main()
+        </code></pre>
+    </div>
+
+    <!-- Destructor -->
+    <div class="card">
+        <h3>Destructores</h3>
+        <pre><code class="language-python">
+import math
+
+class Comida:
+    def __init__(self, proteinas, carbohidratos, grasas):
+        self.proteinas = proteinas
+        self.carbohidratos = carbohidratos
+        self.grasas = grasas
+        print("Objeto comida creado")
+        print(f"{self.proteinas}g {self.carbohidratos}g {self.grasas}g")
+
+    def calcular_calorias(self):
+        calorias = self.proteinas * 4 + self.carbohidratos * 4 + self.grasas * 9
+        return calorias
+
+    def mostrar_informacion(self):
+        print("INFORMACIÓN NUTRICIONAL")
+        print(f"Proteínas: {self.proteinas}g")
+        print(f"Carbohidratos: {self.carbohidratos}g")
+        print(f"Grasas: {self.grasas}g")
+        print(f"Calorías totales: {self.calcular_calorias()} Kcal")
+
+almuerzo = Comida(proteinas=30, carbohidratos=50, grasas=20)
+almuerzo.mostrar_informacion()
+
+del almuerzo
+
+try:
+    print(almuerzo)
+except NameError:
+    print("Almuerzo destruido")
+        </code></pre>
+    </div>
+
+    <!-- Sobrecarga -->
+    <div class="card">
+        <h3>Sobrecarga de Operadores</h3>
+        <pre><code class="language-python">
+class Punto:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, otro):
+        return Punto(self.x + otro.x, self.y + otro.y)
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+p1 = Punto(2, 3)
+p2 = Punto(4, 1)
+resultado = p1 + p2
+print("Resultado de la suma:", resultado)
+        </code></pre>
+    </div>
+
+    <!-- Tareas -->
+    <div class="card">
+        <h3>Tarea 1</h3>
+        <pre><code class="language-python">
+# Tarea: Calcular el área de un círculo
+import math
+r = float(input("Ingrese el radio: "))
+area = math.pi * r**2
+print("Área del círculo:", area)
+        </code></pre>
+    </div>
+
+    <div class="card">
+        <h3>Tarea 2</h3>
+        <pre><code class="language-python">
+# Tarea: Mostrar los números pares del 1 al 20
+for i in range(1, 21):
+    if i % 2 == 0:
+        print(i)
+        </code></pre>
+    </div>
+
+</div>
+
+<footer>Repositorio creado por [Tu Nombre] — Programación Orientada a Objetos</footer>
+
+</body>
+</html>
