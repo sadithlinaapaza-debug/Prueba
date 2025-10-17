@@ -1,281 +1,704 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Portafolio — Programación Numérica FINESI</title>
 
-  <!-- Estilos -->
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+
   <style>
-    body {
-      background-color: #e8f5fc; /* fondo celeste muy claro */
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: #002b4d;
-      margin: 0;
-      padding: 0;
+    :root{
+      --bg:#E8F6FF; /* celeste muy claro */
+      --card:#fffef6;
+      --accent:#2b6cb0;
+      --muted:#23415a;
+      --shadow:0 8px 28px rgba(35,65,90,0.08);
+      --radius:16px;
+      --mono:'Fira Code', monospace;
+      --ui:'Inter', system-ui, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--ui);
+      background:var(--bg);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    .sheet{
+      max-width:1100px;
+      margin:0 auto;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+      border-radius:18px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(35,65,90,0.03);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 30px;
+    /* Header */
+    .hero{
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+      border-radius:14px;
+      padding:22px;
+      text-align:center;
+      margin-bottom:20px;
+      box-shadow:0 6px 18px rgba(35,65,90,0.04);
     }
+    .hero h1{ margin:4px 0; font-size:20px; color:var(--accent); font-weight:700; letter-spacing:0.02em; text-transform:uppercase; }
+    .hero h2{ margin:6px 0; font-size:18px; color:#034a7a; font-weight:700; text-transform:uppercase; }
+    .hero h3{ margin:6px 0; font-size:16px; color:#0b3d66; font-weight:600; }
+    .hero p{ margin:4px 0; color:var(--muted) }
 
-    header h1 {
-      font-size: 26px;
-      font-weight: bold;
-      color: #004c80;
-      margin-bottom: 10px;
+    /* Nav */
+    .nav { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px; }
+    .nav button{
+      background:linear-gradient(180deg,#66a8ff,#007acc);
+      color:white; border:0; padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer;
+      box-shadow:0 6px 14px rgba(3,76,130,0.12);
     }
+    .nav button:hover{ transform:translateY(-3px) }
 
-    header h2 {
-      font-size: 20px;
-      color: #0066a1;
-      margin: 5px 0;
-    }
+    /* Sections */
+    .section{ display:none; padding:18px; background:var(--card); border-radius:12px; margin-bottom:18px; box-shadow:0 6px 18px rgba(35,65,90,0.04) }
+    .section.active{ display:block; }
 
-    header h3 {
-      font-size: 18px;
-      color: #005c8a;
-      margin: 3px 0;
-    }
+    .section h2{ margin-top:0; color:var(--accent); font-size:18px }
+    .theory{ color:#0b3d66; line-height:1.6; margin-bottom:14px; font-size:14px; }
 
-    nav {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+    pre{ background:#fcfeff; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#0b2540; }
+    .download{ color:var(--accent); font-weight:700; text-decoration:none; display:inline-block; margin-top:8px }
+    .back{ display:inline-block; margin-top:12px; text-decoration:none; color:#034a86; font-weight:700; }
 
-    .nav-btn {
-      display: inline-block;
-      background-color: #007acc;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 8px;
-      border-radius: 10px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    /* Table docentes */
+    .docentes-table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px }
+    .docentes-table th, .docentes-table td{ border:1px solid rgba(35,65,90,0.08); padding:8px; text-align:left }
+    .docentes-table th{ background:linear-gradient(90deg, rgba(43,108,176,0.12), rgba(127,179,255,0.08)); color:var(--muted); font-weight:700 }
 
-    .nav-btn:hover {
-      background-color: #005f99;
-    }
-
-    section {
-      margin-bottom: 50px;
-      padding: 20px;
-      background-color: #f8fcff;
-      border-radius: 15px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
-    }
-
-    h2 {
-      color: #004c80;
-      border-bottom: 2px solid #007acc;
-      padding-bottom: 5px;
-    }
-
-    .volver {
-      display: block;
-      margin-top: 15px;
-      text-align: right;
-    }
-
-    .volver a {
-      text-decoration: none;
-      color: #007acc;
-      font-weight: bold;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #cce7f5;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #007acc;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f0faff;
-    }
-
-    canvas {
-      display: block;
-      margin: 20px auto;
+    /* small screens */
+    @media(max-width:720px){
+      .nav{ gap:8px }
+      .hero h1{ font-size:18px }
+      .hero h2{ font-size:16px }
     }
   </style>
-
-  <!-- MathJax para fórmulas -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
 </head>
 <body>
-  <div class="container">
-
-    <header>
+  <div class="sheet">
+    <div class="hero">
       <h1>UNIVERSIDAD NACIONAL DEL ALTIPLANO - PUNO</h1>
       <h2>INGENIERÍA ESTADÍSTICA E INFORMÁTICA</h2>
       <h3>Programación Numérica — FINESI</h3>
-      <p><strong>Estudiante:</strong> Sadith Lina Apaza</p>
-      <p><strong>Docente:</strong> Ing. Fred Torres Cruz</p>
-    </header>
+      <p><strong>Estudiante:</strong> Sadith Lina Apaza &nbsp; | &nbsp; <strong>Docente:</strong> Ing. Fred Torres Cruz</p>
+    </div>
 
-    <!-- Navegación principal -->
-    <nav>
-      <button class="nav-btn" onclick="showSection('mod1')">Módulo 1</button>
-      <button class="nav-btn" onclick="showSection('mod2')">Módulo 2</button>
-      <button class="nav-btn" onclick="showSection('mod3')">Módulo 3</button>
-      <button class="nav-btn" onclick="showSection('mod4')">Módulo 4</button>
-      <button class="nav-btn" onclick="showSection('mod5')">Módulo 5</button>
-      <button class="nav-btn" onclick="showSection('mod6')">Módulo 6</button>
-      <button class="nav-btn" onclick="showSection('mod7')">Módulo 7</button>
-      <button class="nav-btn" onclick="showSection('mod8')">Módulo 8</button>
-      <button class="nav-btn" onclick="showSection('docentes')">Docentes</button>
-    </nav>
+    <div class="nav">
+      <button onclick="show('home')">Inicio</button>
+      <button onclick="show('mod1')">Módulo 1</button>
+      <button onclick="show('mod2')">Módulo 2</button>
+      <button onclick="show('mod3')">Módulo 3</button>
+      <button onclick="show('mod4')">Módulo 4</button>
+      <button onclick="show('mod5')">Módulo 5</button>
+      <button onclick="show('mod6')">Módulo 6</button>
+      <button onclick="show('mod7')">Módulo 7</button>
+      <button onclick="show('mod8')">Módulo 8</button>
+      <button onclick="show('docentes')">Docentes</button>
+    </div>
 
-    <!-- === MÓDULOS === -->
-    <section id="mod1" style="display:none;">
-      <h2>Módulo 1: Analizador de funciones</h2>
-      <p>Este módulo permite identificar las características principales de una función matemática, como dominio, rango, simetría, continuidad y puntos críticos. El análisis de funciones es una base importante en el estudio de métodos numéricos, ya que permite comprender el comportamiento de una función antes de aplicar algoritmos de resolución.</p>
-      <p><strong>Concepto clave:</strong> Una función es una relación \( f: X \to Y \) donde cada elemento de \( X \) se asocia a un único elemento de \( Y \).</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- HOME / INSTRUCCIONES -->
+    <section id="home" class="section active">
+      <h2>Bienvenido/a</h2>
+      <p class="theory">Selecciona un módulo para ver la teoría, la fórmula y el código Python. Los códigos están tal cual como los entregaste; no han sido modificados. En la sección "Docentes" encontrarás la tabla completa con 31 docentes y un resumen estadístico.</p>
+      <p>Usa los botones de arriba para navegar. Cada módulo tiene un botón para volver aquí.</p>
     </section>
 
-    <section id="mod2" style="display:none;">
-      <h2>Módulo 2: Graficadora</h2>
-      <p>La graficadora representa visualmente funciones matemáticas. En este módulo se generan gráficos de funciones lineales del tipo \( y = mx + b \), lo cual permite comprender el efecto de los parámetros \( m \) (pendiente) y \( b \) (intersección con el eje Y).</p>
-      <p><strong>Fórmula:</strong> \( y = mx + b \)</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 1 -->
+    <section id="mod1" class="section">
+      <h2>Módulo 1 — Analizador de funciones</h2>
+      <p class="theory">El analizador identifica variables y operaciones en una expresión matemática. Esto ayuda a preprocesar la función antes de evaluarla o graficarla, detectar símbolos no válidos y preparar la expresión para métodos numéricos.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">class Analizador:
+    def __init__(self, funcion):
+        self.funcion = funcion
+
+    def obtener_variables(self):
+        variables = []
+        for caracter in self.funcion:
+            if caracter.isalpha() and caracter not in variables:
+                variables.append(caracter)
+        return variables
+
+    def obtener_operaciones(self):
+        operaciones = []
+        for caracter in self.funcion:
+            if caracter in "+-*/":
+                operaciones.append(caracter)
+        return operaciones
+
+funcion = input("Escribe una función matemática: ")
+
+analizador = Analizador(funcion)
+
+print("
+ RESULTADO ")
+print("Variables encontradas:", analizador.obtener_variables())
+print("Operaciones encontradas:", analizador.obtener_operaciones())</code></pre>
+
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod3" style="display:none;">
-      <h2>Módulo 3: Restricciones</h2>
-      <p>Este módulo mejora el graficador permitiendo representar condiciones o restricciones que limitan el dominio de la función. Las restricciones son útiles para representar regiones factibles en optimización o partes específicas de una función.</p>
-      <p><strong>Ejemplo:</strong> \( y = 2x + 1 \) con \( x \ge 0 \)</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 2 -->
+    <section id="mod2" class="section">
+      <h2>Módulo 2 — Graficadora</h2>
+      <p class="theory">La graficadora transforma expresiones en representaciones visuales (en este caso ASCII) para funciones lineales. Para $y = mx + b$, la pendiente $m$ y la ordenada al origen $b$ determinan la inclinación y la posición de la recta.</p>
+      <p><strong>Fórmula</strong>: \( y = m x + b \)</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">class GraficadoraLineal:
+    def __init__(self, expresion1, expresion2):
+        self.expresion1 = expresion1
+        self.expresion2 = expresion2
+        self.x = []
+        self.y1 = []
+        self.y2 = []
+
+    def generar_valores(self):
+        x = -10
+        while x <= 10:
+            self.x.append(x)
+            self.y1.append(eval(self.expresion1))
+            self.y2.append(eval(self.expresion2))
+            x = x + 1
+
+    def graficar_consola(self):
+        for i in range(len(self.x)):
+            espacios1 = " " * (self.y1[i] + 20)
+            linea = f"x={self.x[i]:>3} | {espacios1}*"
+
+            espacios2 = " " * (self.y2[i] + 20)
+            linea2 = f"{espacios2}#"
+
+            print(linea + linea2)
+
+f1 = input("Ingresa la primera funcion lineal: ")
+f2 = input("Ingresa la segunda funcion lineal: ")
+
+mi_grafica = GraficadoraLineal(f1, f2)
+mi_grafica.generar_valores()
+mi_grafica.graficar_consola()</code></pre>
+
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod4" style="display:none;">
-      <h2>Módulo 4: Método de Newton-Raphson</h2>
-      <p>El método de Newton-Raphson es un procedimiento iterativo para hallar raíces de una función \( f(x) = 0 \) mediante una aproximación sucesiva.</p>
-      <p><strong>Fórmula:</strong> \( x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \)</p>
-      <p>Este método tiene una convergencia cuadrática cuando la función es derivable y la raíz está cerca del valor inicial.</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 3 -->
+    <section id="mod3" class="section">
+      <h2>Módulo 3 — Restricciones</h2>
+      <p class="theory">Las restricciones delimitan regiones del dominio donde la función es válida. Útiles en optimización para definir regiones factibles. En tu código, las restricciones se evalúan punto por punto y se muestra una cuadrícula ASCII con los puntos factibles marcados.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">
+          class Restriccion:
+    def __init__(self, expresion):
+        self.expresion = expresion.replace(" ", "")
+
+    def cumple(self, x, y):
+        expr = self.expresion.replace("x", str(x)).replace("y", str(y))
+        try:
+            return eval(expr)
+        except Exception as e:
+            print("Error evaluando la restricción:", self.expresion, "->", e)
+            return False
+
+class ProblemaASCII:
+    def __init__(self):
+        self.restricciones = []
+
+    def ingresar_datos(self):
+        n = int(input("¿Cuántas restricciones?: ").strip())
+        for i in range(n):
+            r = input(f"Restricción #{i+1}: ")
+            self.restricciones.append(Restriccion(r))
+
+        print("\n--- RANGOS ---")
+        self.x_min = int(input("x mínimo : ").strip())
+        self.x_max = int(input("x máximo : ").strip())
+        self.y_min = int(input("y mínimo : ").strip())
+        self.y_max = int(input("y máximo : ").strip())
+
+        paso = input("Paso de la cuadrícula (enteros, por defecto 1): ").strip()
+        self.step = int(paso) if paso != "" else 1
+
+    def punto_factible(self, x, y):
+        for r in self.restricciones:
+            if not r.cumple(x, y):
+                return False
+        return True
+
+    def listar_puntos_factibles(self):
+        factibles = []
+        for y in range(self.y_min, self.y_max + 1, self.step):
+            for x in range(self.x_min, self.x_max + 1, self.step):
+                if self.punto_factible(x, y):
+                    factibles.append((x, y))
+        return factibles
+
+    def imprimir_ascii(self):
+        xs = list(range(self.x_min, self.x_max + 1, self.step))
+        ys = list(range(self.y_min, self.y_max + 1, self.step))
+
+        print("\n=== GRÁFICA  ===")
+        header = "    " 
+        for x in xs:
+            if (x - self.x_min) % (max(1, (len(xs)//10))) == 0:
+                header += f"{str(x).rjust(2)}"
+            else:
+                header += "  "
+        print(header)
+
+        for y in reversed(ys): 
+            line = f"{str(y).rjust(3)} "  
+            for x in xs:
+                if self.punto_factible(x, y):
+                    line += " #"
+                else:
+                    line += " ."
+            print(line)
+
+        footer = "    "
+        for x in xs:
+            if (x - self.x_min) % (max(1, (len(xs)//10))) == 0:
+                footer += f"{str(x).rjust(2)}"
+            else:
+                footer += "  "
+        print(footer)
+        print("\nLeyenda: '#' punto factible, '.' no factible.")
+
+    def ejecutar(self):
+        self.ingresar_datos()
+        factibles = self.listar_puntos_factibles()
+        if not factibles:
+            print("\nNo se encontraron puntos factibles en el rango dado.")
+        else:
+            print(f"\nSe encontraron {len(factibles)} puntos factibles:")
+            for p in factibles[:20]:
+                print(" ", p)
+        self.imprimir_ascii()
+
+def main():
+    prog = ProblemaASCII()
+    prog.ejecutar()
+
+if __name__ == "__main__":
+    main()
+        </code></pre>
+
+      <a class="download" href="Restricciones.py" download>Descargar Restricciones.py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod5" style="display:none;">
-      <h2>Módulo 5: Método de Punto Fijo</h2>
-      <p>El método de punto fijo transforma el problema \( f(x)=0 \) en \( x=g(x) \) y aplica iteraciones para aproximarse al punto que satisface la igualdad.</p>
-      <p><strong>Fórmula:</strong> \( x_{n+1} = g(x_n) \)</p>
-      <p>La convergencia depende de que \( |g'(x)| < 1 \) en el intervalo de análisis.</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 4 -->
+    <section id="mod4" class="section">
+      <h2>Módulo 4 — Método Newton Raphson</h2>
+      <p class="theory">Newton-Raphson es un método iterativo para encontrar raíces mediante la fórmula $x_{n+1}=x_n - f(x_n)/f'(x_n)$. Converge rápidamente si la aproximación inicial es buena y la derivada no se anula.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">import math
+
+class NewtonRaphson:
+    def __init__(self):
+        pass
+
+    def f(self, x, expr):
+        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
+
+    def ejecutar(self):
+        expr = input("Ingrese f(x): ").strip()
+        dexpr = input("Ingrese f'(x): ").strip()
+        x0 = float(input("x0: "))
+        tol = float(input("Tolerancia (ej: 1e-6): "))
+        maxit = int(input("Iteraciones maximas: "))
+        x = x0
+        for i in range(1, maxit+1):
+            fx = self.f(x, expr)
+            dfx = self.f(x, dexpr)
+            if dfx == 0:
+                print("Derivada cero. Deteniendo.")
+                return
+            x_new = x - fx/dfx
+            if abs(x_new - x) < tol:
+                print(f"Raíz: {x_new}")
+                print(f"f(raíz): {self.f(x_new, expr)}")
+                print(f"Iteraciones: {i}")
+                return
+            x = x_new
+        print(f"Resultado tras {maxit} iter: {x}")
+        print(f"f(aprox): {self.f(x, expr)}")
+
+if __name__ == "__main__":
+    NewtonRaphson().ejecutar()</code></pre>
+
+      <a class="download" href="Newton Raphson.py" download>Descargar Newton Raphson.py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod6" style="display:none;">
-      <h2>Módulo 6: Método de Bisección</h2>
-      <p>Este método divide un intervalo en mitades sucesivas para localizar la raíz de una función continua. Es un método seguro y siempre converge si existe un cambio de signo en \( f(a) \) y \( f(b) \).</p>
-      <p><strong>Fórmula:</strong> \( x_{r} = \frac{a + b}{2} \)</p>
-      <p>El proceso continúa hasta que el error relativo sea menor que un valor prefijado.</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 5 -->
+    <section id="mod5" class="section">
+      <h2>Módulo 5 — Método Punto Fijo</h2>
+      <p class="theory">El método de punto fijo reescribe $f(x)=0$ como $x=g(x)$ y aplica iteraciones $x_{n+1}=g(x_n)$. Convergencia si $|g'(x)|<1$ en el intervalo.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">
+          import math
+
+class PuntoFijo:
+    def __init__(self):
+        pass
+
+    def g(self, x, expr):
+        safe_locals = {
+            "x": x,
+            "ln": math.log,        
+            "log": math.log,       
+            "log10": math.log10,   
+            "exp": math.exp,
+            "sqrt": math.sqrt,
+            "e": math.e,
+            "pi": math.pi,
+            **{k: getattr(math, k) for k in dir(math) if not k.startswith("__")}
+        }
+        return eval(expr, {"__builtins__": None}, safe_locals)
+
+    def ejecutar(self):
+        expr = input("Ingrese g(x) para x = g(x) (ej: (x+2/x)/2 o ln(x+1)): ").strip()
+        x0 = float(input("x0: "))
+        tol = float(input("Tolerancia (ej: 1e-6): "))
+        maxit = int(input("Iteraciones máximas: "))
+
+        x = x0
+        for i in range(1, maxit + 1):
+            x_new = self.g(x, expr)
+            error = abs((x_new - x) / x_new) * 100 if x_new != 0 else float('inf')
+
+            print(f"Iteración {i}: x = {x_new:.10f}, Error = {error:.6f}%")
+
+            if error < tol * 100:  
+                print(f"\nPunto fijo: {x_new}")
+                print(f"Iteraciones: {i}")
+                print(f"Error porcentual final: {error:.6f}%")
+                return
+
+            x = x_new
+
+        print(f"\nResultado tras {maxit} iteraciones: {x}")
+        print(f"Error porcentual final: {error:.6f}%")
+
+if __name__ == "__main__":
+    PuntoFijo().ejecutar()
+    </code></pre>
+
+      <a class="download" href="punto fijo.py" download>Descargar Punto Fijo 1.py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod7" style="display:none;">
-      <h2>Módulo 7: Método de Regula Falsi</h2>
-      <p>La Regula Falsi (o Falsa Posición) aproxima la raíz usando una recta secante entre los puntos \( (a, f(a)) \) y \( (b, f(b)) \).</p>
-      <p><strong>Fórmula:</strong> \( x_{r} = b - f(b)\frac{a - b}{f(a) - f(b)} \)</p>
-      <p>Es similar a la bisección, pero puede converger más rápido en ciertos casos.</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 6 -->
+    <section id="mod6" class="section">
+      <h2>Módulo 6 — Método de Bisección</h2>
+      <p class="theory">Bisección localiza una raíz en un intervalo con cambio de signo: divide repetidamente y mantiene el subintervalo que contiene la raíz. Garantía de convergencia aunque lenta (lineal).</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">
+        import math
+
+class Biseccion:
+    def __init__(self):
+        pass
+
+    def f(self, x, expr):
+        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
+
+    def ejecutar(self):
+        expr = input("Ingrese f(x) como expresión en Python (ej: x**3-2*x-5): ").strip()
+        a = float(input("a: "))
+        b = float(input("b: "))
+        tol = float(input("Tolerancia (ej: 1e-6): "))
+        maxit = int(input("Iteraciones maximas: "))
+        fa = self.f(a, expr)
+        fb = self.f(b, expr)
+        if fa * fb > 0:
+            print("No hay cambio de signo en el intervalo.")
+            return
+        for i in range(1, maxit+1):
+            c = (a + b) / 2.0
+            fc = self.f(c, expr)
+            if abs(fc) == 0 or (b - a) / 2.0 < tol:
+                print(f"Raíz: {c}")
+                print(f"f(raíz): {fc}")
+                print(f"Iteraciones: {i}")
+                return
+            if fa * fc < 0:
+                b = c
+                fb = fc
+            else:
+                a = c
+                fa = fc
+        print(f"Raíz aproximada tras {maxit} iter: {c}")
+        print(f"f(raíz): {fc}")
+
+if __name__ == "__main__":
+    Biseccion().ejecutar()
+    </code></pre>
+
+      <a class="download" href="Método de Bisección.py" download>Descargar Método de Bisección .py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <section id="mod8" style="display:none;">
-      <h2>Módulo 8: Método de la Secante</h2>
-      <p>El método de la secante es una variación del método de Newton-Raphson que no requiere derivada. Utiliza dos puntos iniciales para calcular una aproximación a la raíz.</p>
-      <p><strong>Fórmula:</strong> \( x_{n+1} = x_n - f(x_n)\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \)</p>
-      <p>Generalmente converge más rápido que el método de bisección, aunque puede ser inestable si las aproximaciones iniciales no son adecuadas.</p>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    <!-- Módulo 7 -->
+    <section id="mod7" class="section">
+      <h2>Módulo 7 — Método de Regula Falsi (Falsa Posición)</h2>
+      <p class="theory">Regula Falsi usa la secante entre los extremos del intervalo para aproximar la raíz: puede converger más rápido que bisección pero en algunos casos se estanca.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">
+        import math
+
+class RegulaFalsi:
+    def __init__(self):
+        pass
+
+    def f(self, x, expr):
+        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
+
+    def ejecutar(self):
+        expr = input("Ingrese f(x) como expresión en Python (ej: x**3-2*x-5): ").strip()
+        a = float(input("a: "))
+        b = float(input("b: "))
+        tol = float(input("Tolerancia (ej: 1e-6): "))
+        maxit = int(input("Iteraciones maximas: "))
+        fa = self.f(a, expr)
+        fb = self.f(b, expr)
+        if fa * fb > 0:
+            print("No hay cambio de signo en el intervalo.")
+            return
+        c = a
+        for i in range(1, maxit+1):
+            c = (a * fb - b * fa) / (fb - fa)
+            fc = self.f(c, expr)
+            if abs(fc) < tol:
+                print(f"Raíz: {c}")
+                print(f"f(raíz): {fc}")
+                print(f"Iteraciones: {i}")
+                return
+            if fa * fc < 0:
+                b = c
+                fb = fc
+            else:
+                a = c
+                fa = fc
+        print(f"Raíz aproximada tras {maxit} iter: {c}")
+        print(f"f(raíz): {self.f(c, expr)}")
+
+if __name__ == "__main__":
+    RegulaFalsi().ejecutar()
+
+    </code></pre>
+
+      <a class="download" href="Método de Regula Falsi (Falsa Posición).py" download>Descargar Método de Regula Falsi (Falsa Posición).py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
     </section>
 
-    <!-- === DOCENTES === -->
-    <section id="docentes" style="display:none;">
+    <!-- Módulo 8 -->
+    <section id="mod8" class="section">
+      <h2>Módulo 8 — Método de la Secante</h2>
+      <p class="theory">La secante aproxima la derivada con una diferencia finita entre dos puntos; no requiere la derivada explícita y suele converger más rápido que bisección en muchos casos.</p>
+
+      <h3>Código (sin modificar)</h3>
+      <pre><code class="language-python">
+        import math
+
+class Secante:
+    def __init__(self):
+        pass
+
+    def f(self, x, expr):
+        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
+
+    def ejecutar(self):
+        expr = input("Ingrese f(x) : ").strip()
+        x0 = float(input("x0: "))
+        x1 = float(input("x1: "))
+        tol = float(input("Tolerancia (ej: 1e-6): "))
+        maxit = int(input("Iteraciones maximas: "))
+        f0 = self.f(x0, expr)
+        f1 = self.f(x1, expr)
+        for i in range(1, maxit+1):
+            denom = (f1 - f0)
+            if denom == 0:
+                print("Denominador cero. Deteniendo.")
+                return
+            x2 = x1 - f1 * (x1 - x0) / denom
+            if abs(x2 - x1) < tol:
+                print(f"Raíz: {x2}")
+                print(f"f(raíz): {self.f(x2, expr)}")
+                print(f"Iteraciones: {i}")
+                return
+            x0, f0 = x1, f1
+            x1, f1 = x2, self.f(x2, expr)
+        print(f"Resultado tras {maxit} iter: {x1}")
+        print(f"f(aprox): {self.f(x1, expr)}")
+
+if __name__ == "__main__":
+    Secante().ejecutar()
+
+
+    </code></pre>
+
+      <a class="download" href="secante).py" download>Descargar secante.py</a>
+      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+    </section>
+
+    <!-- Sección FINAL: Índice H de los docentes (31 docentes) -->
+    <section id="docentes" class="section">
       <h2>ÍNDICE H DE LOS DOCENTES DE FINESI</h2>
       <p>La siguiente tabla muestra la verificación en Scopus (si se encontró cuenta), número de documentos, citas e índice h.</p>
 
-      <!-- Aquí va la tabla que enviaste -->
-      <!-- (idéntica a la que diste) -->
-      <table>
+      <table class="docentes-table" id="tabla-docentes">
         <thead>
           <tr>
-            <th>Docente</th><th>Cuenta Scopus</th><th>Publicaciones</th><th>Citas</th><th>Índice H</th>
+            <th>Docente (APELLIDO, Nombre)</th>
+            <th>Cuenta Scopus</th>
+            <th>Publicaciones</th>
+            <th>Citas</th>
+            <th>Índice H</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Por brevedad no se repite todo aquí, pero en tu archivo final incluye las 31 filas -->
-          <tr><td>ALVAREZ ROZAS, Teresa paola</td><td>No</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>ALVAREZ ROZAS, Teresa paola</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>APAZA CUTIPA, Renzo</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>APAZA TARQUI, Alejandro</td><td>Sí</td><td>5</td><td>6</td><td>1</td></tr>
+          <tr><td>CANQUI FLORES, Bernabé</td><td>Sí</td><td>8</td><td>20</td><td>3</td></tr>
+          <tr><td>CARPIO VARGAS, Edgar eloy</td><td>Sí</td><td>9</td><td>26</td><td>3</td></tr>
+          <tr><td>COYLA DME, Leonel</td><td>Sí</td><td>5</td><td>1</td><td>1</td></tr>
+          <tr><td>GONZALES ACHATA, Alfredo ernesto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>JUAREZ VARGAS, Juan carlos</td><td>Sí</td><td>3</td><td>2</td><td>1</td></tr>
+          <tr><td>LLUEN VALLEJOS, Cesar augusto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>LOPEZ CUEVA, Milton antonio</td><td>Sí</td><td>6</td><td>2</td><td>1</td></tr>
+          <tr><td>MENDOZA MOLLOCONDO, Charles ignacio</td><td>Sí</td><td>8</td><td>17</td><td>3</td></tr>
+          <tr><td>MORILLOS VALDERRAMA, Santos octavio</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>PEREZ QUISPE, Samuel donato</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>PUMA HUAMAN, Beto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>QUISPE CARITA, Angel javier</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>SALAS PILCO, Maria maura</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>TITO LIPA, José pánfilo</td><td>Sí</td><td>3</td><td>0</td><td>0</td></tr>
+          <tr><td>TUMI FIGUEROA, Ernesto nayer</td><td>Sí</td><td>6</td><td>23</td><td>3</td></tr>
+          <tr><td>VILLASANTE SARAVIA, Fredy heric</td><td>Sí</td><td>2</td><td>7</td><td>2</td></tr>
+          <tr><td>ALEMÁN GONZALES, Leonid</td><td>Sí</td><td>4</td><td>0</td><td>0</td></tr>
+          <tr><td>AZAÑERO DE A AGUIRRE, Emma orfelinda</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>CHOQUEJAHUA ACERO, Remo</td><td>Sí</td><td>2</td><td>2</td><td>1</td></tr>
+          <tr><td>HUATA PANCA, Percy</td><td>Sí</td><td>3</td><td>14</td><td>2</td></tr>
+          <tr><td>IBÁÑEZ QUISPE, Vladimiro</td><td>Sí</td><td>21</td><td>52</td><td>5</td></tr>
+          <tr><td>PAREDES QUISPE, Juan reynaldo</td><td>Sí</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>PARI CONDORI, Elqui yeye</td><td>Sí</td><td>3</td><td>1</td><td>1</td></tr>
+          <tr><td>QUISPE MAMANI, Godofredo</td><td>Sí</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>QUISPE YAPO, Edgardo</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>ROQUE CLAROS, Roberto elvis</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>VARGAS VALVERDE, Confesor milan</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
           <tr><td>TORRES CRUZ, Fredy heric</td><td>Sí</td><td>39</td><td>74</td><td>4</td></tr>
         </tbody>
       </table>
 
-      <canvas id="chart" width="500" height="250"></canvas>
-      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+      <!-- Estadística rápida -->
+      <h3 style="margin-top:14px">Resumen estadístico</h3>
+      <ul>
+        <li><strong>Total docentes:</strong> 31</li>
+        <li><strong>Docentes con cuenta Scopus (verificados como "Sí"):</strong> 18</li>
+        <li><strong>Docentes sin cuenta en Scopus:</strong> 13</li>
+        <li><strong>Índice H promedio (entre los que tienen valor numérico):</strong> aprox. 2.1</li>
+        <li><strong>Máximo índice H:</strong> 5 (Vladimiro Ibáñez Quispe)</li>
+      </ul>
+
+      <canvas id="scopusChart" width="700" height="200"></canvas>
+
+      <p><strong>Observación:</strong> varias filas aparecen con '-' cuando no se encontró autor en Scopus o no hay datos públicos.</p>
+      <p class="back"><a href="#" onclick="show('home');return false;">⬅ Volver al inicio</a></p>
     </section>
+
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(s => s.style.display = "none");
-      document.getElementById(id).style.display = "block";
-      window.scrollTo(0, 0);
+    // Navegación: mostrar sección
+    function show(id){
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      const el = document.getElementById(id);
+      if(el) el.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    function goHome() {
-      document.querySelectorAll("section").forEach(s => s.style.display = "none");
-    }
+    // Inicial: mostrar home
+    show('home');
 
-    // Gráfico para docentes
-    const ctx = document.getElementById("chart");
-    if (ctx) {
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Cuenta Scopus: Sí", "Cuenta Scopus: No"],
-          datasets: [{
-            label: "Cantidad de docentes",
-            data: [18, 13],
-            backgroundColor: ["#4da6ff", "#a6d9ff"]
-          }]
-        },
+    // Crear gráfico Scopus Sí/No y mostrar valores encima de barras
+    (function(){
+      const yes = 18;
+      const no = 13;
+      const ctx = document.getElementById('scopusChart').getContext('2d');
+      const data = {
+        labels: ['Cuenta Scopus: Sí', 'Cuenta Scopus: No'],
+        datasets: [{
+          label: 'Docentes',
+          data: [yes, no],
+          backgroundColor: ['#4da6ff','#cfefff']
+        }]
+      };
+      const config = {
+        type: 'bar',
+        data,
         options: {
           responsive: true,
           plugins: {
             legend: { display: false },
-            title: { display: true, text: "Distribución de docentes según Scopus" }
+            tooltip: { enabled: true },
+            title: { display: true, text: 'Distribución de docentes según Scopus' }
           },
           scales: {
-            y: { beginAtZero: true }
+            y: { beginAtZero: true, ticks: { stepSize: 1 } }
           }
-        }
-      });
-    }
+        },
+        plugins: [{
+          id: 'showValues',
+          afterDatasetsDraw(chart) {
+            const ctx = chart.ctx;
+            chart.data.datasets.forEach((dataset, i) => {
+              const meta = chart.getDatasetMeta(i);
+              meta.data.forEach((bar, index) => {
+                const data = dataset.data[index];
+                ctx.fillStyle = '#034a7a';
+                ctx.font = '600 13px Inter, Arial';
+                const x = bar.x;
+                const y = bar.y - 8;
+                ctx.textAlign = 'center';
+                ctx.fillText(String(data), x, y);
+              });
+            });
+          }
+        }]
+      };
+      new Chart(ctx, config);
+    })();
   </script>
 </body>
 </html>
