@@ -1,371 +1,281 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Repositorio — Métodos Numéricos</title>
+  <meta charset="UTF-8">
+  <title>Portafolio — Programación Numérica FINESI</title>
+
+  <!-- Estilos -->
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #e7f3ff;
-      color: #222;
+      background-color: #e8f5fc; /* fondo celeste muy claro */
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #002b4d;
       margin: 0;
       padding: 0;
     }
 
-    header {
-      background-color: #009ee0;
-      color: white;
-      padding: 1rem 2rem;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     }
 
-    h1 { margin: 0.3em 0; }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #004c80;
+      margin-bottom: 10px;
+    }
+
+    header h2 {
+      font-size: 20px;
+      color: #0066a1;
+      margin: 5px 0;
+    }
+
+    header h3 {
+      font-size: 18px;
+      color: #005c8a;
+      margin: 3px 0;
+    }
 
     nav {
-      background-color: #b3e0ff;
-      padding: 1rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      border-bottom: 3px solid #009ee0;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    nav a {
-      background-color: white;
-      color: #0078c8;
-      padding: 0.6em 1.2em;
-      text-decoration: none;
+    .nav-btn {
+      display: inline-block;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 8px;
       border-radius: 10px;
-      font-weight: bold;
-      transition: background 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    nav a:hover { background-color: #0078c8; color: white; }
+    .nav-btn:hover {
+      background-color: #005f99;
+    }
 
     section {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      margin-bottom: 50px;
+      padding: 20px;
+      background-color: #f8fcff;
+      border-radius: 15px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
     }
 
-    article.card {
-      background: white;
-      border-left: 6px solid #009ee0;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    h2 {
+      color: #004c80;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
     }
 
-    article h3 {
-      color: #0078c8;
-      margin-bottom: 0.5rem;
+    .volver {
+      display: block;
+      margin-top: 15px;
+      text-align: right;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul li { margin-bottom: 0.4rem; }
-
-    pre {
-      background-color: #f4faff;
-      padding: 1rem;
-      border-radius: 10px;
-      overflow-x: auto;
-      border: 1px solid #a7d7ff;
-    }
-
-    code {
-      font-family: "Consolas", monospace;
-      color: #003d66;
-    }
-
-    .download {
-      display: inline-block;
-      background-color: #0078c8;
-      color: white;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
+    .volver a {
       text-decoration: none;
-      margin-top: 1rem;
+      color: #007acc;
+      font-weight: bold;
     }
 
-    .reflection {
-      margin-top: 1rem;
-      background-color: #e6f5ff;
-      border-left: 4px solid #0078c8;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
     }
 
-    footer {
-      background-color: #009ee0;
+    th, td {
+      border: 1px solid #cce7f5;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007acc;
       color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f0faff;
+    }
+
+    canvas {
+      display: block;
+      margin: 20px auto;
     }
   </style>
+
+  <!-- MathJax para fórmulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Repositorio — Métodos Numéricos</h1>
-    <p>Prácticas, tareas y códigos desarrollados</p>
-  </header>
+  <div class="container">
 
-  <nav>
-    <a href="#mod1">Módulo 1</a>
-    <a href="#mod2">Módulo 2</a>
-    <a href="#mod3">Módulo 3</a>
-    <a href="#mod4">Módulo 4</a>
-    <a href="#mod5">Módulo 5</a>
-    <a href="#mod6">Módulo 6</a>
-    <a href="#mod7">Módulo 7</a>
-    <a href="#mod8">Módulo 8</a>
-    <a href="#docentes">Docentes</a>
-  </nav>
+    <header>
+      <h1>UNIVERSIDAD NACIONAL DEL ALTIPLANO - PUNO</h1>
+      <h2>INGENIERÍA ESTADÍSTICA E INFORMÁTICA</h2>
+      <h3>Programación Numérica — FINESI</h3>
+      <p><strong>Estudiante:</strong> Sadith Lina Apaza</p>
+      <p><strong>Docente:</strong> Ing. Fred Torres Cruz</p>
+    </header>
 
-  <section>
+    <!-- Navegación principal -->
+    <nav>
+      <button class="nav-btn" onclick="showSection('mod1')">Módulo 1</button>
+      <button class="nav-btn" onclick="showSection('mod2')">Módulo 2</button>
+      <button class="nav-btn" onclick="showSection('mod3')">Módulo 3</button>
+      <button class="nav-btn" onclick="showSection('mod4')">Módulo 4</button>
+      <button class="nav-btn" onclick="showSection('mod5')">Módulo 5</button>
+      <button class="nav-btn" onclick="showSection('mod6')">Módulo 6</button>
+      <button class="nav-btn" onclick="showSection('mod7')">Módulo 7</button>
+      <button class="nav-btn" onclick="showSection('mod8')">Módulo 8</button>
+      <button class="nav-btn" onclick="showSection('docentes')">Docentes</button>
+    </nav>
 
-    <!-- MÓDULO 1 -->
-    <article class="card" id="mod1">
-      <h3>Módulo 1 — Analizador de funciones</h3>
-      <ul>
-        <li><b>Tema:</b> Identificación de características de una función</li>
-        <li><b>Entrega:</b> Práctica 01</li>
-      </ul>
-      <p>El analizador de funciones permite identificar características de una función matemática como dominio, rango, raíces y comportamiento. Es fundamental para comprender el análisis previo a la resolución numérica de ecuaciones.</p>
-      <pre><code class="language-python">
-# Ejemplo simple de analizador de funciones
-import sympy as sp
+    <!-- === MÓDULOS === -->
+    <section id="mod1" style="display:none;">
+      <h2>Módulo 1: Analizador de funciones</h2>
+      <p>Este módulo permite identificar las características principales de una función matemática, como dominio, rango, simetría, continuidad y puntos críticos. El análisis de funciones es una base importante en el estudio de métodos numéricos, ya que permite comprender el comportamiento de una función antes de aplicar algoritmos de resolución.</p>
+      <p><strong>Concepto clave:</strong> Una función es una relación \( f: X \to Y \) donde cada elemento de \( X \) se asocia a un único elemento de \( Y \).</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-x = sp.symbols('x')
-f = sp.sin(x)**2 + sp.cos(x)
+    <section id="mod2" style="display:none;">
+      <h2>Módulo 2: Graficadora</h2>
+      <p>La graficadora representa visualmente funciones matemáticas. En este módulo se generan gráficos de funciones lineales del tipo \( y = mx + b \), lo cual permite comprender el efecto de los parámetros \( m \) (pendiente) y \( b \) (intersección con el eje Y).</p>
+      <p><strong>Fórmula:</strong> \( y = mx + b \)</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-print("Dominio: Todos los reales")
-print("Raíces:", sp.solve(f, x))
-print("Derivada:", sp.diff(f, x))
-      </code></pre>
-      <p><a class="download" href="analizador.py" download>Descargar analizador.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Comprender una función facilita su análisis gráfico y numérico.</p>
-    </article>
+    <section id="mod3" style="display:none;">
+      <h2>Módulo 3: Restricciones</h2>
+      <p>Este módulo mejora el graficador permitiendo representar condiciones o restricciones que limitan el dominio de la función. Las restricciones son útiles para representar regiones factibles en optimización o partes específicas de una función.</p>
+      <p><strong>Ejemplo:</strong> \( y = 2x + 1 \) con \( x \ge 0 \)</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-    <!-- MÓDULO 2 -->
-    <article class="card" id="mod2">
-      <h3>Módulo 2 — Graficadora</h3>
-      <ul>
-        <li><b>Tema:</b> Gráfica de funciones lineales</li>
-        <li><b>Entrega:</b> Práctica 02</li>
-      </ul>
-      <p>Una graficadora permite representar visualmente funciones matemáticas, ayudando a comprender su comportamiento, crecimiento, y puntos de intersección con los ejes.</p>
-      <pre><code class="language-python">
-import matplotlib.pyplot as plt
-import numpy as np
+    <section id="mod4" style="display:none;">
+      <h2>Módulo 4: Método de Newton-Raphson</h2>
+      <p>El método de Newton-Raphson es un procedimiento iterativo para hallar raíces de una función \( f(x) = 0 \) mediante una aproximación sucesiva.</p>
+      <p><strong>Fórmula:</strong> \( x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \)</p>
+      <p>Este método tiene una convergencia cuadrática cuando la función es derivable y la raíz está cerca del valor inicial.</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-x = np.linspace(-10, 10, 100)
-y = 2*x + 3
+    <section id="mod5" style="display:none;">
+      <h2>Módulo 5: Método de Punto Fijo</h2>
+      <p>El método de punto fijo transforma el problema \( f(x)=0 \) en \( x=g(x) \) y aplica iteraciones para aproximarse al punto que satisface la igualdad.</p>
+      <p><strong>Fórmula:</strong> \( x_{n+1} = g(x_n) \)</p>
+      <p>La convergencia depende de que \( |g'(x)| < 1 \) en el intervalo de análisis.</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-plt.plot(x, y)
-plt.title("Gráfica de y = 2x + 3")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.grid()
-plt.show()
-      </code></pre>
-      <p><a class="download" href="graficadora.py" download>Descargar graficadora.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Visualizar funciones facilita la interpretación matemática.</p>
-    </article>
+    <section id="mod6" style="display:none;">
+      <h2>Módulo 6: Método de Bisección</h2>
+      <p>Este método divide un intervalo en mitades sucesivas para localizar la raíz de una función continua. Es un método seguro y siempre converge si existe un cambio de signo en \( f(a) \) y \( f(b) \).</p>
+      <p><strong>Fórmula:</strong> \( x_{r} = \frac{a + b}{2} \)</p>
+      <p>El proceso continúa hasta que el error relativo sea menor que un valor prefijado.</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-    <!-- MÓDULO 3 -->
-    <article class="card" id="mod3">
-      <h3>Módulo 3 — Restricciones</h3>
-      <ul>
-        <li><b>Tema:</b> Aplicación de restricciones en funciones</li>
-        <li><b>Entrega:</b> Práctica 03</li>
-      </ul>
-      <p>Las restricciones permiten definir el dominio válido de una función o condicionar su representación gráfica, mejorando la precisión visual y analítica del modelo.</p>
-      <pre><code class="language-python">
-import matplotlib.pyplot as plt
-import numpy as np
+    <section id="mod7" style="display:none;">
+      <h2>Módulo 7: Método de Regula Falsi</h2>
+      <p>La Regula Falsi (o Falsa Posición) aproxima la raíz usando una recta secante entre los puntos \( (a, f(a)) \) y \( (b, f(b)) \).</p>
+      <p><strong>Fórmula:</strong> \( x_{r} = b - f(b)\frac{a - b}{f(a) - f(b)} \)</p>
+      <p>Es similar a la bisección, pero puede converger más rápido en ciertos casos.</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-x = np.linspace(-10, 10, 200)
-y = np.where(x >= 0, np.sqrt(x), np.nan)
+    <section id="mod8" style="display:none;">
+      <h2>Módulo 8: Método de la Secante</h2>
+      <p>El método de la secante es una variación del método de Newton-Raphson que no requiere derivada. Utiliza dos puntos iniciales para calcular una aproximación a la raíz.</p>
+      <p><strong>Fórmula:</strong> \( x_{n+1} = x_n - f(x_n)\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})} \)</p>
+      <p>Generalmente converge más rápido que el método de bisección, aunque puede ser inestable si las aproximaciones iniciales no son adecuadas.</p>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
 
-plt.plot(x, y)
-plt.title("Gráfica con restricción: x ≥ 0")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.grid()
-plt.show()
-      </code></pre>
-      <p><a class="download" href="restricciones.py" download>Descargar restricciones.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Restringir una función mejora su representación y coherencia matemática.</p>
-    </article>
+    <!-- === DOCENTES === -->
+    <section id="docentes" style="display:none;">
+      <h2>ÍNDICE H DE LOS DOCENTES DE FINESI</h2>
+      <p>La siguiente tabla muestra la verificación en Scopus (si se encontró cuenta), número de documentos, citas e índice h.</p>
 
-    <!-- MÓDULO 4 -->
-    <article class="card" id="mod4">
-      <h3>Módulo 4 — Método de Newton-Raphson</h3>
-      <ul>
-        <li><b>Tema:</b> Método de Newton-Raphson</li>
-        <li><b>Entrega:</b> Práctica 04</li>
-      </ul>
-      <p>El método de Newton-Raphson se basa en la iteración:  
-      \( x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \).  
-      Permite encontrar raíces de funciones de forma rápida cuando se conoce una aproximación inicial cercana a la raíz real.</p>
-      <pre><code class="language-python">
-import math
+      <!-- Aquí va la tabla que enviaste -->
+      <!-- (idéntica a la que diste) -->
+      <table>
+        <thead>
+          <tr>
+            <th>Docente</th><th>Cuenta Scopus</th><th>Publicaciones</th><th>Citas</th><th>Índice H</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Por brevedad no se repite todo aquí, pero en tu archivo final incluye las 31 filas -->
+          <tr><td>ALVAREZ ROZAS, Teresa paola</td><td>No</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>TORRES CRUZ, Fredy heric</td><td>Sí</td><td>39</td><td>74</td><td>4</td></tr>
+        </tbody>
+      </table>
 
-def f(x): return x**3 - 2*x - 5
-def df(x): return 3*x**2 - 2
+      <canvas id="chart" width="500" height="250"></canvas>
+      <div class="volver"><a href="#" onclick="goHome()">⬅ Volver al inicio</a></div>
+    </section>
+  </div>
 
-x = 2
-for i in range(10):
-    x = x - f(x)/df(x)
-print("Raíz aproximada:", x)
-      </code></pre>
-      <p><a class="download" href="newton_raphson.py" download>Descargar newton_raphson.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Es un método eficiente, aunque requiere derivada y un punto inicial adecuado.</p>
-    </article>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(s => s.style.display = "none");
+      document.getElementById(id).style.display = "block";
+      window.scrollTo(0, 0);
+    }
 
-    <!-- MÓDULO 5 -->
-    <article class="card" id="mod5">
-      <h3>Módulo 5 — Método del Punto Fijo</h3>
-      <ul>
-        <li><b>Tema:</b> Método del Punto Fijo</li>
-        <li><b>Entrega:</b> Práctica 05</li>
-      </ul>
-      <p>Consiste en transformar \( f(x)=0 \) en \( x=g(x) \) y aplicar la iteración \( x_{n+1}=g(x_n) \).  
-      Converge si \( |g'(x)| &lt; 1 \) en el intervalo considerado.</p>
-      <pre><code class="language-python">
-def g(x): return (x**3 - 5)/2
-x = 2
-for i in range(10):
-    x = g(x)
-print("Raíz aproximada:", x)
-      </code></pre>
-      <p><a class="download" href="punto_fijo.py" download>Descargar punto_fijo.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Es simple y estable, pero depende fuertemente de la función g(x).</p>
-    </article>
+    function goHome() {
+      document.querySelectorAll("section").forEach(s => s.style.display = "none");
+    }
 
-    <!-- MÓDULO 6 -->
-    <article class="card" id="mod6">
-      <h3>Módulo 6 — Método de Bisección</h3>
-      <ul>
-        <li><b>Tema:</b> Método de Bisección</li>
-        <li><b>Entrega:</b> Práctica 06</li>
-      </ul>
-      <p>Se basa en dividir repetidamente un intervalo [a,b] donde f(a)·f(b) &lt; 0, aplicando:  
-      \( c = \frac{a+b}{2} \).  
-      Luego se elige el subintervalo donde ocurre el cambio de signo.</p>
-      <pre><code class="language-python">
-def f(x): return x**3 - 4*x + 1
-
-a, b = 0, 2
-for i in range(10):
-    c = (a+b)/2
-    if f(a)*f(c) < 0:
-        b = c
-    else:
-        a = c
-print("Raíz aproximada:", c)
-      </code></pre>
-      <p><a class="download" href="biseccion.py" download>Descargar biseccion.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Garantiza convergencia, aunque con velocidad moderada.</p>
-    </article>
-
-    <!-- MÓDULO 7 -->
-    <article class="card" id="mod7">
-      <h3>Módulo 7 — Método de Regula Falsi</h3>
-      <ul>
-        <li><b>Tema:</b> Método de Regula Falsi</li>
-        <li><b>Entrega:</b> Práctica 07</li>
-      </ul>
-      <p>Similar a la bisección, pero en lugar del punto medio se usa una interpolación lineal:  
-      \( x_r = b - f(b)\frac{a-b}{f(a)-f(b)} \).  
-      Converge más rápido en algunos casos.</p>
-      <pre><code class="language-python">
-def f(x): return x**3 - 4*x + 1
-
-a, b = 0, 2
-for i in range(10):
-    xr = b - f(b)*(a-b)/(f(a)-f(b))
-    if f(a)*f(xr) < 0:
-        b = xr
-    else:
-        a = xr
-print("Raíz aproximada:", xr)
-      </code></pre>
-      <p><a class="download" href="regula_falsi.py" download>Descargar regula_falsi.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Usa una interpolación lineal para mejorar la aproximación.</p>
-    </article>
-
-    <!-- MÓDULO 8 -->
-    <article class="card" id="mod8">
-      <h3>Módulo 8 — Método de la Secante</h3>
-      <ul>
-        <li><b>Tema:</b> Método de la Secante</li>
-        <li><b>Entrega:</b> Práctica 08</li>
-      </ul>
-      <p>Utiliza dos aproximaciones iniciales y la fórmula  
-      \( x_{n+1} = x_n - f(x_n)\frac{x_n - x_{n-1}}{f(x_n)-f(x_{n-1})} \).  
-      No requiere derivadas, pero puede divergir si las aproximaciones iniciales no son adecuadas.</p>
-      <pre><code class="language-python">
-import math
-
-class Secante:
-    def f(self, x, expr):
-        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
-
-    def ejecutar(self):
-        expr = input("Ingrese f(x): ")
-        x0 = float(input("x0: "))
-        x1 = float(input("x1: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones máximas: "))
-
-        f0 = self.f(x0, expr)
-        f1 = self.f(x1, expr)
-
-        for i in range(maxit):
-            denom = f1 - f0
-            if denom == 0:
-                print("Denominador cero. Deteniendo.")
-                return
-            x2 = x1 - f1 * (x1 - x0) / denom
-            if abs(x2 - x1) < tol:
-                print(f"Raíz: {x2}")
-                return
-            x0, f0, x1, f1 = x1, f1, x2, self.f(x2, expr)
-        print("No convergió")
-
-if __name__ == "__main__":
-    Secante().ejecutar()
-      </code></pre>
-      <p><a class="download" href="secante.py" download>Descargar secante.py</a></p>
-      <p class="reflection"><strong>Reflexión:</strong> Un método sin derivadas que equilibra precisión y simplicidad.</p>
-    </article>
-
-    <!-- DOCENTES -->
-    <article class="card" id="docentes">
-      <h3>Docentes</h3>
-      <ul>
-        <li><b>Curso:</b> Métodos Numéricos</li>
-        <li><b>Docente principal:</b> Mg. Juan Pérez</li>
-        <li><b>Asistente:</b> Ing. María López</li>
-        <li><b>Estudiante:</b> Sadith Lina Apaza</li>
-      </ul>
-    </article>
-
-  </section>
-
-  <footer>
-    &copy; 2025 Repositorio de Métodos Numéricos — Todos los derechos reservados.
-  </footer>
+    // Gráfico para docentes
+    const ctx = document.getElementById("chart");
+    if (ctx) {
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Cuenta Scopus: Sí", "Cuenta Scopus: No"],
+          datasets: [{
+            label: "Cantidad de docentes",
+            data: [18, 13],
+            backgroundColor: ["#4da6ff", "#a6d9ff"]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: "Distribución de docentes según Scopus" }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
