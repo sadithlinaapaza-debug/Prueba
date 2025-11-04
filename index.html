@@ -10,12 +10,12 @@
   <style>
     :root{
       --bg:#fff7fb;
-      --accent:#9d174d;
+      --accent-strong:#ff69b4; /* rosa vivo */
+      --accent-soft:#ffa8d9;   /* rosa suave */
       --muted:#1e293b;
       --shadow:0 8px 28px rgba(30,41,59,0.06);
       --mono:'Fira Code', monospace;
       --ui:'Inter', system-ui, Arial, sans-serif;
-      --pink-contour: rgba(244,114,182,0.25); /* contorno rosado claro */
     }
     *{box-sizing:border-box}
     body{
@@ -27,15 +27,26 @@
       padding:20px;
     }
 
-    /* sheet con contorno rosado claro */
+    /* sheet con contorno rosado (mezcla) */
     .sheet{
       max-width:1200px;
       margin:0 auto;
-      background:#fff;
+      background:linear-gradient(180deg,#ffffff, #fff8fb);
       border-radius:12px;
       padding:18px;
       box-shadow:var(--shadow);
-      border:2px solid var(--pink-contour); /* rosado claro */
+      border:3px solid var(--accent-soft);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* sutil borde superior en degradado rosado */
+    .sheet::before{
+      content:"";
+      position:absolute;
+      left:0; right:0; top:0;
+      height:6px;
+      background:linear-gradient(90deg,var(--accent-strong),var(--accent-soft));
     }
 
     /* hero: logos a izquierda/derecha, texto centrado */
@@ -47,32 +58,30 @@
       padding:12px;
       border-radius:10px;
       margin-bottom:14px;
-      background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
-    }
-    .hero .logo-left, .hero .logo-right{
-      width:80px; height:80px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,250,253,0.95));
     }
     .hero img{ width:80px; height:80px; object-fit:contain; }
     .hero .meta{ flex:1; text-align:center; } /* texto centrado */
     /* IMPORTANT: header texts below kept exactly as requested */
-    .hero h1{ margin:0; font-size:18px; color:var(--accent); font-weight:700; text-transform:uppercase; }
-    .hero h2{ margin:6px 0 0 0; font-size:14px; color:#6b1f4a; font-weight:700; }
-    .hero h3{ margin:6px 0 0 0; font-size:13px; color:#4b1053; font-weight:600; }
+    .hero h1{ margin:0; font-size:18px; color:var(--accent-strong); font-weight:700; text-transform:uppercase; }
+    .hero h2{ margin:6px 0 0 0; font-size:14px; color:var(--accent-strong); font-weight:700; }
+    .hero h3{ margin:6px 0 0 0; font-size:13px; color:var(--accent-strong); font-weight:600; }
     .hero p{ margin:6px 0 0 0; font-size:13px; color:var(--muted); }
 
     /* nav */
     .nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; justify-content:center; }
     .nav button{
-      background:linear-gradient(180deg,#f472b6,#9d174d);
+      background:linear-gradient(180deg,var(--accent-strong),var(--accent-soft));
       color:white; border:0; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer;
-      box-shadow:0 6px 12px rgba(157,23,77,0.10);
+      box-shadow:0 6px 12px rgba(255,105,180,0.12);
     }
+    .nav button:hover{ transform:translateY(-2px) }
 
     .section{ display:none; padding:12px 6px; background:transparent; border-radius:8px; margin-bottom:12px; }
     .section.active{ display:block; }
 
-    .section h2{ margin-top:0; color:var(--accent); font-size:18px }
-    .theory{ color:#4b1053; line-height:1.5; margin-bottom:12px; font-size:14px; text-align:justify; }
+    .section h2{ margin-top:0; color:var(--accent-strong); font-size:18px }
+    .theory{ color:#4b1053; line-height:1.6; margin-bottom:12px; font-size:14px; text-align:justify; }
 
     .grid {
       display:grid;
@@ -81,21 +90,21 @@
     }
     .card {
       background:#fff;
-      border:2px solid rgba(244,114,182,0.10);
+      border:2px solid rgba(255,105,180,0.12);
       border-radius:10px;
       padding:12px;
       box-shadow:0 6px 16px rgba(0,0,0,0.03);
       position:relative;
     }
-    .card h3{ margin:0 0 8px 0; font-size:16px; color:#7b2051; text-align:left; }
-    pre{ background:#fff6fb; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#1e293b; white-space:pre; }
+    .card h3{ margin:0 0 8px 0; font-size:16px; color:#b21b66; text-align:left; }
+    pre{ background:linear-gradient(180deg,#fff6fb,#fff0f8); padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#1e293b; white-space:pre; }
 
     .actions { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; justify-content:flex-start; }
     .btn {
       border:0; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700; font-size:13px;
     }
-    .btn-copy{ background:#ffecf6; color:#9d174d; }
-    .btn-download{ background:#e6ffef; color:#065f46; }
+    .btn-copy{ background:#ffecf6; color:var(--accent-strong); }
+    .btn-download{ background:#fff0f6; color:#065f46; border:1px solid rgba(0,0,0,0.04); }
 
     footer { margin-top:18px; text-align:center; color:#475569; font-size:13px; display:flex; align-items:center; justify-content:center; gap:12px; padding-top:8px; }
     .back-home { background:linear-gradient(180deg,#66a8ff,#007acc); color:white; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:700; border:0; cursor:pointer; }
@@ -106,12 +115,12 @@
       right:18px;
       bottom:18px;
       z-index:999;
-      background:linear-gradient(180deg,#f472b6,#9d174d);
+      background:linear-gradient(180deg,var(--accent-strong),var(--accent-soft));
       color:white;
       border:none;
       padding:12px 14px;
       border-radius:12px;
-      box-shadow:0 10px 30px rgba(157,23,77,0.18);
+      box-shadow:0 10px 30px rgba(255,105,180,0.18);
       font-weight:700;
       cursor:pointer;
     }
@@ -128,7 +137,7 @@
   <div class="sheet">
     <div class="hero">
       <!-- Mantengo las imágenes en los lados exactamente como pediste -->
-      <div class="logo-left"><img src="logo-facultad.png" alt="Logo Facultad" /></div>
+      <div><img src="logo-facultad.png" alt="Logo Facultad" /></div>
 
       <div class="meta">
         <h1>Universidad Nacional del Altiplano - Puno</h1>
@@ -138,10 +147,10 @@
         <p><strong>Docente:</strong> Ing. Leonel Coyla Idme</p>
       </div>
 
-      <div class="logo-right"><img src="logo-una.png" alt="Logo UNA" /></div>
+      <div><img src="logo-una.png" alt="Logo UNA" /></div>
     </div>
 
-    <!-- Navegación: ahora incluye Inicio -->
+    <!-- Navegación: incluye Inicio -->
     <div class="nav">
       <button onclick="show('home')">Inicio</button>
       <button onclick="show('orientada')">Programación Orientada a Objetos</button>
@@ -154,20 +163,23 @@
       <button onclick="show('relaciones')">Relación entre Clases</button>
     </div>
 
-    <!-- SECCIÓN INICIO (bienvenida) -->
+    <!-- SECCIÓN INICIO (introducción del curso y códigos) -->
     <section id="home" class="section active">
-      <h2>Bienvenido/a</h2>
+      <h2>Introducción al curso</h2>
       <p class="theory">
-        Este repositorio recopila los ejercicios y ejemplos del curso <strong>Lenguaje de Programación 2</strong>.
-        Usa los botones de la navegación para acceder a cada tema. En cada tarjeta encontrarás el bloque de código en modo lectura,
-        y debajo de cada bloque los botones para <strong>Copiar</strong> y <strong>Descargar (.py)</strong>.
+        Lenguaje de Programación 2 profundiza en conceptos clave de programación estructurada y orientada a objetos, incluyendo encapsulamiento,
+        constructores y destructores, sobrecarga de métodos y operadores, así como estructuras de control selectivas y repetitivas.
+        Este repositorio compila implementaciones prácticas y ejemplos en Python que ilustran cada concepto: desde clases básicas y ejemplos de herencia,
+        hasta algoritmos simples de manejo de colecciones y problemas clásicos (factorial, Fibonacci, tablas, etc.).
       </p>
-      <p class="theory"><strong>Instrucciones rápidas:</strong></p>
-      <ul>
-        <li>Haz clic en <strong>Inicio</strong> para volver a esta pantalla de bienvenida.</li>
-        <li>Para guardar un ejercicio, usa el botón <em>Descargar .py</em> debajo del código.</li>
-        <li>Para copiar al portapapeles, usa <em>Copiar</em>.</li>
-      </ul>
+
+      <p class="theory">
+        Cada tarjeta contiene el bloque de código correspondiente a un ejercicio o tarea, pensado para servir como material de estudio y referencia.
+        Los fragmentos mantienen la estructura original del curso para facilitar el análisis y la comparación entre distintas soluciones propuestas por los estudiantes.
+      </p>
+
+      <p class="theory"><strong>Contenido incluido:</strong> ejercicios sobre Programación Orientada a Objetos, Estructuras Selectivas y Repetitivas, Encapsulamiento,
+      Métodos y Sobrecarga, Operadores, Constructores y relaciones entre clases.</p>
     </section>
 
     <!-- Programación Orientada a Objetos -->
@@ -482,8 +494,7 @@ if __name__=="__main__":
           </div>
         </div>
 
-        <!-- Los demás ejercicios de repetitiva se mantienen como en tu archivo original -->
-        <!-- (He incluido los bloques principales en la versión anterior; si quieres que agregue los restantes aquí también, lo hago) -->
+        <!-- (otros ejercicios permanecen en el archivo completo si los deseas añadidos) -->
 
       </div>
     </section>
@@ -521,12 +532,10 @@ if __name__=="__main__":
             <button class="btn btn-download" data-action="download">Descargar .py</button>
           </div>
         </div>
-
-        <!-- Más tarjetas se mantienen en las otras secciones (no las repito todas aquí para no alargar) -->
       </div>
     </section>
 
-    <!-- Métodos y demás (plantilla) -->
+    <!-- Métodos -->
     <section id="metodos" class="section">
       <h2>Método y Sobrecarga</h2>
       <div class="grid">
@@ -554,7 +563,7 @@ persona1.saludar()
       </div>
     </section>
 
-    <!-- Método Operador -->
+    <!-- Operador -->
     <section id="operador" class="section">
       <h2>Método Operador</h2>
       <div class="grid">
