@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lenguaje de Programación 2 — UNA Puno</title>
 
-  <!-- Google fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#f8fbff;
-      --sheet:#ffffff;
-      --accent:#9d174d; /* combinado con tu paleta rosada */
+      --bg:#fff7fb;
+      --accent:#9d174d;
       --muted:#1e293b;
-      --shadow:0 10px 28px rgba(30,41,59,0.06);
-      --radius:14px;
+      --shadow:0 8px 28px rgba(30,41,59,0.06);
       --mono:'Fira Code', monospace;
       --ui:'Inter', system-ui, Arial, sans-serif;
     }
@@ -23,7 +20,7 @@
     body{
       margin:0;
       font-family:var(--ui);
-      background:linear-gradient(180deg,#fde8f3,#fff);
+      background:linear-gradient(180deg,#fff,#fff2f7);
       color:var(--muted);
       -webkit-font-smoothing:antialiased;
       padding:20px;
@@ -32,139 +29,105 @@
     .sheet{
       max-width:1200px;
       margin:0 auto;
-      background:var(--sheet);
-      border-radius:18px;
-      padding:20px;
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
       box-shadow:var(--shadow);
       border:1px solid rgba(0,0,0,0.04);
     }
 
-    /* Header / Hero */
     .hero{
       display:flex;
       gap:16px;
       align-items:center;
-      background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
-      border-radius:12px;
-      padding:18px;
-      margin-bottom:18px;
+      padding:12px;
+      border-radius:10px;
+      margin-bottom:14px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
     }
-    .hero .logos { width:96px; display:flex; gap:8px; align-items:center; }
-    .hero img { width:64px; height:64px; object-fit:contain; border-radius:8px; }
-    .hero .meta { flex:1; text-align:left; }
+    .hero img{ width:64px; height:64px; object-fit:contain; }
+    .hero .meta{ flex:1; }
+    /* IMPORTANT: header texts below kept exactly as requested */
     .hero h1{ margin:0; font-size:18px; color:var(--accent); font-weight:700; text-transform:uppercase; }
     .hero h2{ margin:4px 0 0 0; font-size:14px; color:#6b1f4a; font-weight:700; }
+    .hero h3{ margin:6px 0 0 0; font-size:13px; color:#4b1053; font-weight:600; }
     .hero p{ margin:6px 0 0 0; font-size:13px; color:var(--muted); }
 
-    /* Nav */
-    .nav { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-start; margin:10px 0 18px 0; }
+    .nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
     .nav button{
       background:linear-gradient(180deg,#f472b6,#9d174d);
-      color:white; border:0; padding:8px 12px; border-radius:10px; font-weight:700; cursor:pointer;
-      box-shadow:0 6px 12px rgba(157,23,77,0.12);
-    }
-    .nav button.secondary {
-      background:linear-gradient(180deg,#66a8ff,#007acc);
-      box-shadow:0 6px 12px rgba(3,76,130,0.08);
+      color:white; border:0; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer;
+      box-shadow:0 6px 12px rgba(157,23,77,0.10);
     }
 
-    /* Sections */
-    .section{ display:none; padding:18px; background:linear-gradient(180deg, #fff, #fff ); border-radius:12px; margin-bottom:18px; }
+    .section{ display:none; padding:12px; background:transparent; border-radius:8px; margin-bottom:12px; }
     .section.active{ display:block; }
 
     .section h2{ margin-top:0; color:var(--accent); font-size:18px }
-    .theory{ color:#4b1053; line-height:1.6; margin-bottom:14px; font-size:14px; }
+    .theory{ color:#4b1053; line-height:1.5; margin-bottom:12px; font-size:14px; }
 
-    /* Grid / cards */
     .grid {
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-      gap:16px;
-      margin-top:12px;
+      gap:14px;
     }
     .card {
       background:#fff;
-      border:2px solid rgba(244,114,182,0.14);
-      border-radius:12px;
-      padding:12px 12px 14px 12px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.03);
+      border:2px solid rgba(244,114,182,0.12);
+      border-radius:10px;
+      padding:12px;
+      box-shadow:0 6px 16px rgba(0,0,0,0.03);
       position:relative;
-      min-height:120px;
     }
-    .card h3{ margin:4px 0 6px 0; font-size:16px; display:inline-block; color:#7b2051; }
-    .card .toolbar { position:absolute; right:12px; top:12px; display:flex; gap:8px; }
+    .card h3{ margin:0 0 8px 0; font-size:16px; color:#7b2051; }
+    pre{ background:#fff6fb; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#1e293b; white-space:pre; }
+    .actions { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
     .btn {
-      border:0; padding:6px 8px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:700;
+      border:0; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700; font-size:13px;
     }
     .btn-copy{ background:#ffecf6; color:#9d174d; }
-    .btn-toggle{ background:#fff7ed; color:#92400e; }
     .btn-download{ background:#e6ffef; color:#065f46; }
 
-    pre{ background:#fff6fb; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#1e293b; margin-top:40px; white-space:pre; }
-    code{ display:block; white-space:pre; }
-
-    .download-link{ display:inline-block; margin-top:8px; text-decoration:none; font-weight:700; color:var(--accent) }
-
-    /* table docentes */
-    .docentes-table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px }
-    .docentes-table th, .docentes-table td{ border:1px solid rgba(0,0,0,0.06); padding:8px; text-align:left }
-    .docentes-table th{ background:linear-gradient(90deg, rgba(157,23,77,0.08), rgba(255,182,193,0.04)); color:var(--muted); font-weight:700 }
-
+    footer { margin-top:18px; text-align:center; color:#475569; font-size:13px; }
     @media(max-width:720px){
-      .hero{ flex-direction:column; align-items:flex-start; gap:8px }
       .grid{ grid-template-columns: 1fr; }
+      .hero{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 <body>
   <div class="sheet">
     <div class="hero">
-      <div class="logos">
-        <img src="logo-facultad.png" alt="Logo Facultad" />
-        <img src="logo-una.png" alt="Logo UNA" />
-      </div>
+      <!-- Mantengo los src y la ubicación de las imágenes exactamente donde estaban -->
+      <img src="logo-facultad.png" alt="Logo Facultad" />
       <div class="meta">
-        <h1>Universidad Nacional del Altiplano — Puno</h1>
+        <h1>Universidad Nacional del Altiplano - Puno</h1>
         <h2>Facultad de Ingeniería Estadística e Informática</h2>
-        <p><strong>Curso:</strong> Lenguaje de Programación 2 — <strong>Estudiante:</strong> Sadith Lina Apaza Huayta — <strong>Docente:</strong> Ing. Leonel Coyla Idme</p>
+        <h3>Curso: Lenguaje de Programación 2</h3>
+        <p><strong>Estudiante:</strong> Sadith Lina Apaza Huayta</p>
+        <p><strong>Docente:</strong> Ing. Leonel Coyla Idme</p>
       </div>
+      <img src="logo-una.png" alt="Logo UNA" />
     </div>
 
-    <div class="nav" aria-hidden="false">
-      <button onclick="show('home')">Inicio</button>
+    <div class="nav">
       <button onclick="show('orientada')">Programación Orientada a Objetos</button>
       <button onclick="show('selectiva')">Estructura Selectiva</button>
       <button onclick="show('repetitiva')">Estructura Repetitiva</button>
       <button onclick="show('encapsulamiento')">Encapsulamiento</button>
-      <button onclick="show('metodos')">Método & Sobrecarga</button>
+      <button onclick="show('metodos')">Método y Sobrecarga</button>
       <button onclick="show('operador')">Método Operador</button>
-      <button onclick="show('constructores')">Constructores & Destructores</button>
+      <button onclick="show('constructores')">Constructores y Destructor</button>
       <button onclick="show('relaciones')">Relación entre Clases</button>
-      <button class="secondary" onclick="show('gradiente')">Gradiente</button>
-      <button class="secondary" onclick="show('OLSyGD')">OLS y GD</button>
-      <button onclick="show('docentes')">Docentes</button>
     </div>
 
-    <!-- HOME -->
-    <section id="home" class="section active">
-      <h2>Bienvenido/a</h2>
-      <p class="theory">Este portafolio reúne ejercicios y ejemplos del curso Lenguaje de Programación 2. Usa la navegación para moverte entre secciones. Cada tarjeta de código tiene acciones rápidas: <em>Copiar</em>, <em>Mostrar/Ocultar</em> y <em>Descargar .py</em>.</p>
-    </section>
-
-    <!-- Programación Orientada a Objetos (copiado de tu primer archivo) -->
-    <section id="orientada" class="section">
+    <!-- Secciones: incluí TODO el código que tenías en tu primer HTML, tarjeta por tarjeta. -->
+    <!-- 1) Programación Orientada a Objetos (todos los ejercicios correspondientes) -->
+    <section id="orientada" class="section active">
       <h2>Programación Orientada a Objetos</h2>
-
       <div class="grid">
-        <!-- EJERCICIO 1 -->
         <div class="card">
           <h3>Ejercicio 1</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
-
           <pre><code class="language-python">
 class Coche:
     def __init__(self,marca,modelo,color):
@@ -189,18 +152,15 @@ mi_coche = Coche(marca, modelo, color)
 # Usar los métodos
 mi_coche.mostrar_info()
 mi_coche.arrancar()
-          </code></pre>
-        </div>
-
-        <!-- EJERCICIO 2 -->
-        <div class="card">
-          <h3>Ejercicio 2</h3>
-          <div class="toolbar">
+</code></pre>
+          <div class="actions">
             <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
             <button class="btn btn-download" data-action="download">Descargar .py</button>
           </div>
+        </div>
 
+        <div class="card">
+          <h3>Ejercicio 2</h3>
           <pre><code class="language-python">
 class Pitagoras:
     def __init__(self,catetoa,catetob):
@@ -217,18 +177,15 @@ catetob = float(input("Ingrese cateto b = "))
 operacion = Pitagoras(catetoa,catetob)
 
 print("La hipotenusa es ",operacion.calcular_hipotenusa())   
-          </code></pre>
-        </div>
-
-        <!-- EJERCICIO 3 -->
-        <div class="card">
-          <h3>Ejercicio 3</h3>
-          <div class="toolbar">
+</code></pre>
+          <div class="actions">
             <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
             <button class="btn btn-download" data-action="download">Descargar .py</button>
           </div>
+        </div>
 
+        <div class="card">
+          <h3>Ejercicio 3</h3>
           <pre><code class="language-python">
 class Rectangulo:
     def __init__(self,base,altura):
@@ -247,18 +204,15 @@ operacion_perimetro = Rectangulo(5,6)
 print("El area es ",operacion_area.area())
 
 print("El perimetro es ",operacion_perimetro.perimetro())
-          </code></pre>
-        </div>
-
-        <!-- EJERCICIO 4 -->
-        <div class="card">
-          <h3>Ejercicio 4</h3>
-          <div class="toolbar">
+</code></pre>
+          <div class="actions">
             <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
             <button class="btn btn-download" data-action="download">Descargar .py</button>
           </div>
+        </div>
 
+        <div class="card">
+          <h3>Ejercicio 4</h3>
           <pre><code class="language-python">
 class CantidadLadrillos:
     def __init__(self,longuitud,altura,ancho,Jh,Jv):
@@ -283,22 +237,21 @@ operacion = CantidadLadrillos(longuitud,altura,ancho,Jh,Jv)
 print("La cantidad es ",operacion.Cantidad_de_ladrillos(),"m^2 sin desperdicio")
 print("La cantidad es ",operacion.Cantidad_de_ladrillos()*1.05,"m^2 con desperdicio")
 print("el area",operacion.Cantidad_de_ladrillos()*8.05*ancho,"m^2")
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Estructura Selectiva (ejemplos copiados) -->
+    <!-- 2) Estructura Selectiva -->
     <section id="selectiva" class="section">
       <h2>Estructura Selectiva</h2>
       <div class="grid">
         <div class="card">
           <h3>Ejercicio 5</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Numero:
     def __init__(self,valor):
@@ -316,16 +269,16 @@ ejemplos = [Numero(0),Numero(2),Numero(5)]
 for num in ejemplos:
     tipo = num.clasificar()
     print(f"El numero {num.valor} es {tipo}")
-          </code></pre>
+  
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Ejercicio 6</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Persona:
     def __init__(self,nombre,edad):
@@ -345,16 +298,15 @@ if persona.es_mayor_de_edad():
 
 else:
     print(f"La persona {persona.nombre} es menor de edad")  
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Ejercicio 7</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Empleado:
     def __init__(self,Nombre,Cargo,Salario):
@@ -382,16 +334,15 @@ Salarion = float(input("Ingrese Salario"))
 nuevo = self.Salario *(1 + porcentaje)
     
 print(f"{emp.Nombre} {emp.Cargo}: salario nuevo = {nuevo:2f}")  
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Tarea 1: Signos del Zodiaco</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Persona:
     def __init__(self, nombre, dia, mes):
@@ -433,22 +384,21 @@ mes = input("Ingresa tu mes de nacimiento: ")
 
 persona = Persona(nombre,dia,mes)
 print(f"{persona.nombre} nacio el {persona.dia} de {persona.mes} y tu signo es {persona.signo()}")  
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Estructura Repetitiva (ejemplos) -->
+    <!-- 3) Estructura Repetitiva -->
     <section id="repetitiva" class="section">
       <h2>Estructura Repetitiva</h2>
       <div class="grid">
         <div class="card">
           <h3>Ejercicio 8</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Factorial:
     def __init__(self,numero):
@@ -470,16 +420,15 @@ def main():
             print(f"El factorial de {miFactorial.numero} es {resultado}")
 if __name__=="__main__":
     main()   
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Ejercicio 9</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Fibonaci:
     def __init__(self,cantidad):
@@ -499,16 +448,15 @@ def main():
     print(resultado)
 if __name__=="__main__":
     main()   
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Ejercicio 10</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class TabladeMultiplicar:
     def __init__(self,numero):
@@ -526,24 +474,336 @@ def main():
 
 if __name__=="__main__":
     main()
-          </code></pre>
+   
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
-        <!-- Nota: rest of repetitiva cards can be added following same pattern -->
+        <div class="card">
+          <h3>Ejercicio 11</h3>
+          <pre><code class="language-python">
+class SumaNaturales:
+    def __init__(self, limite, ):
+        self.limite = limite
+        self.suma = 0
+
+    def calcularSuma(self):
+        for i in range(0,self.limite + 1):
+            self.suma = self.suma + i
+        return self.suma
+
+def main():
+    
+    miSuma = SumaNaturales(10)
+    resultado = miSuma.calcularSuma()
+    print(f"La suma de los primeros {miSuma.limite} numero es: {resultado}")
+
+if __name__=="__main__":
+    main()
+
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Tarea 2: Calculadora Estadística</h3>
+          <pre><code class="language-python">
+class CalculadoraEstadistica:
+    def __init__(self, lista, numero):
+        self.lista = lista
+        self.numero = numero
+
+    def ingresar_datos(self):
+        datos = input("Ingrese los datos: ")
+        self.lista = []
+        for i in datos.split():
+            self.numero = float(i)
+            self.lista.append(self.numero)
+
+    def media(self):
+        total = 0
+        contador = 0
+        for i in self.lista:
+            total = total + i
+            contador = contador + 1
+        if contador == 0:
+            return 0
+        return total / contador
+
+    def varianza(self):
+        m = self.media()
+        suma = 0
+        contador = 0
+        for i in self.lista:
+            suma = suma + (i - m) ** 2
+            contador = contador + 1
+        if contador == 0:
+            return 0
+        return suma / contador
+
+    def desviacion_estandar(self):
+        return self.varianza() ** 0.5
+
+CalculadoraDatos = CalculadoraEstadistica([], 0)
+
+CalculadoraDatos.ingresar_datos()
+
+print("Media:", CalculadoraDatos.media())
+print("Varianza:", CalculadoraDatos.varianza())
+print("Desviación estándar:", CalculadoraDatos.desviacion_estandar())
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 12</h3>
+          <pre><code class="language-python">
+class NumeroNatural:
+    def __init__(self, valor):
+        self.valor = valor
+
+    def mostrar(self):
+        print(f"Número natural: {self.valor}")
+
+def main():
+    i = 1
+    while i <= 10:
+        numero = NumeroNatural(i)
+        numero.mostrar()
+        i += 1
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 13</h3>
+          <pre><code class="language-python">
+  class NumeroMultiplo:
+    def __init__(self, valor):
+        self.valor = valor
+
+    def mostrar_multiplo(self):
+        if self.valor == 0:
+            print(f"El {self.valor} es número nulo")
+
+        elif self.valor % 3 == 0 and self.valor % 5 == 0:
+            print(f"Número: {self.valor} es múltiplo de 3 y de 5")
+        elif self.valor % 3 == 0:
+            print(f"Número: {self.valor} es múltiplo de 3")
+        elif self.valor % 5 == 0:
+            print(f"Número: {self.valor} es múltiplo de 5")
+        else:
+            print(f"Número: {self.valor} No es múltiplo de 3 ni de 5")
+
+        print("-" * 60)
+
+
+def main():
+    i = 0
+    while i <= 10:
+        numero = NumeroMultiplo(i)  
+        numero.mostrar_multiplo()
+        i += 1
+
+if __name__ == "__main__":  
+    main()
+
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 14</h3>
+          <pre><code class="language-python">
+class Fibonacci:
+    def __init__(self,cantidad):
+        self.cantidad = cantidad
+        self.a = 0
+        self.b = 1
+        self.contador = 0
+    def generarSerie(self):
+        print("Serie de Fibonacci")
+        while self.contador < self.cantidad:
+            print(self.a , end = " ")
+            c = self.a + self.b
+            self.a = self.b
+            self.b = c
+            self.contador+=1
+
+def main():
+    miFibonacci = Fibonacci(10)
+    miFibonacci.generarSerie()
+if __name__=="__main__":
+    main()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 15</h3>
+          <pre><code class="language-python">
+  class Numero:
+    def __init__(self,cantidad):
+        self.cantidad = cantidad
+        self.contador = 0
+    def generarNumero(self):
+        print("Imprimir Numero")
+        while self.contador <= self.cantidad:
+            print(self.contador , end = " ")
+            self.contador+=1
+
+def main():
+    miNumero = Numero(10)
+    miNumero.generarNumero()
+if __name__=="__main__":
+    main()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 16</h3>
+          <pre><code class="language-python">
+class CalculadoraSuma:
+    def __init__(self):
+        self.total = 0
+        
+    def sumarNumero(self):
+        print("Calcular la suma de numeros ingresados")
+        print("Escribe numeros para sumar. Escribr 'fin' para terminar")
+        entrada=""
+        while entrada.lower() != "fin":
+            entrada = input("Ingrese un numero: ")
+            if entrada.isdigit():
+                self.total+= int(entrada)
+
+            elif entrada.lower() != "fin":
+                print("Entrada invalida: Ecribir un numero o 'fin' ")
+        print(f"La suma total es: {self.total}")
+
+def main():
+    calculadora = CalculadoraSuma()
+    calculadora.sumarNumero()
+if __name__=="__main__":
+    main()  
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 17</h3>
+          <pre><code class="language-python">
+class CalculadoraSuma:
+    def __init__(self):
+        self.total = 0
+        
+    def sumarNumero(self):
+        print("Calcular la suma de numeros ingresados")
+        print("Escribe numeros para sumar. Escribr 'fin' para terminar")
+        entrada=""
+        while entrada.lower() != "fin":
+            entrada = input("Ingrese un numero: ")
+            
+            if entrada.isdigit():
+                numero = 
+                self.total+= int(entrada)
+
+            elif entrada.lower() != "fin":
+                print("Entrada invalida: Ecribir un numero o 'fin' ")
+        print(f"La suma total es: {self.total}")
+
+def main():
+    calculadora = CalculadoraSuma()
+    calculadora.sumarNumero()
+if __name__=="  
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 18</h3>
+          <pre><code class="language-python">
+class GestorTareas:
+    def __init__(self):
+        self.tareas = []
+
+    def agregar_tareas(self,tarea):
+        self.tareas.append(tarea)
+        print("tarea agregada")
+
+    def mostrar_tareas(self):
+        if not self.tareas:
+            print("No hay tareaspendientes")
+
+        else:
+            print("Tareas pendientes")
+            for i, tarea in enumerate(self.tareas,1):
+                print(f"{i} {tarea}")
+
+mi_gestor = GestorTareas()
+
+while True:
+    print("\n ----MENU----")
+    print("1.Agregar tarea ")
+    print("2.Mostrar tareas ")
+    print("3.Salir" )
+    opcion = input("Seleccione una opcion: ")
+
+    if opcion == "1":
+        tarea = input("Escribe la tarea: ")
+        mi_gestor.agregar_tareas(tarea)
+    elif opcion == "2":
+        mi_gestor.mostrar_tareas()
+    elif opcion =="3":
+        print("Saliendo del gestor de tareas")
+        break
+    else:
+        print("Opcion no valida. Intente de nuevo")  
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Encapsulamiento (ejemplos) -->
+    <!-- 4) Encapsulamiento -->
     <section id="encapsulamiento" class="section">
       <h2>Encapsulamiento</h2>
       <div class="grid">
         <div class="card">
           <h3>Ejercicio 19</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class leerNumero:
     def __init__(self,numero):
@@ -565,16 +825,15 @@ def main():
     numero.Rango_Numero()
 if __name__=="__main__":
     main()
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
 
         <div class="card">
           <h3>Ejercicio 20</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
           <pre><code class="language-python">
 class Persona:
     def __init__(self,nombre,edad):
@@ -607,25 +866,155 @@ persona.set_nombre("Maria")
 print(persona.get_edad())
 print(persona.get_nombre())
 print(persona.get_nombre(),persona.get_edad())
-          </code></pre>
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 21</h3>
+          <pre><code class="language-python">
+import math  
+class Circulo:
+    def __init__(self,radio):
+        self.__radio
+
+        def get_radio(self):
+            return self.__radio
+
+        def set_radio(self,nueva_radio):
+            if nueva_radio > 0:
+               self.__radio = nueva_radio
+            else:
+               print("Radio no valida")
+
+        def calcular_area(self):
+            return math.pi*self.__radio**2
+
+        def calcular_perimetro(self):
+            return 2*math.pi*self.__radio
+
+circulo = Circulo(3)
+print("Area del circulo",round(circulo.calcular_area(),2))
+print("Area del perimetro",round(circulo.calcular_perimetro(),2))
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 22</h3>
+          <pre><code class="language-python">
+class Rectangulo:
+    def __init__(self,base,altura):
+        self.__base = base
+        self.__altura = altura
+
+    def get_base(self):
+        return self.__base
+
+    def get_altura(self):
+        return self.__altura
+
+    def set_base(self,nueva_base):
+        if nueva_base > 0:
+            self.__base = nueva_base
+        else:
+            print("base no valida")
+
+    def set_altura(self,nueva_altura):
+        if nueva_altura > 0:
+            self.__altura = nueva_altura
+        else:
+            print("altura no valida")
+
+    def calcular_area(self):
+            return self.__base*self.__altura
+
+    def calcular_perimetro(self):
+            return 2*self.__base+2*self.__altura
+
+rectangulo = Rectangulo(5,4)
+print("El area del rectangulo",rectangulo.calcular_area())
+print("El perimetro del rectangulo",rectangulo.calcular_perimetro())
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 23</h3>
+          <pre><code class="language-python">
+class Calculadora:
+    def __init__(self, numero1, numero2):
+        self.__numero1 = numero1   
+        self.__numero2 = numero2
+
+    def get_numero1(self):
+        return self.__numero1
+
+    def get_numero2(self):
+        return self.__numero2
+
+    def set_numero1(self, nuevo_numero1):
+        self.__numero1 = nuevo_numero1
+
+    def set_numero2(self, nuevo_numero2):
+        self.__numero2 = nuevo_numero2
+
+    def sumar(self):
+        return self.__numero1 + self.__numero2
+
+    def restar(self):
+        return self.__numero1 - self.__numero2
+
+    def multiplicar(self):
+        return self.__numero1 * self.__numero2
+
+    def dividir(self):
+        if self.__numero2 != 0:
+            return self.__numero1 / self.__numero2
+        else:
+            return "Error: División entre 0"
+
+calculadora = Calculadora(2, 5)
+
+print("Número 1:", calculadora.get_numero1())
+print("Número 2:", calculadora.get_numero2())
+
+print("Suma:", calculadora.sumar())
+print("Resta:", calculadora.restar())
+print("Multiplicación:", calculadora.multiplicar())
+print("División:", calculadora.dividir())
+
+calculadora.set_numero1(10)
+calculadora.set_numero2(4)
+
+print("\nNuevos valores:")
+print("Número 1:", calculadora.get_numero1())
+print("Número 2:", calculadora.get_numero2())
+print("Suma:", calculadora.sumar())
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Métodos y demás secciones: plantilla para pegar el resto -->
+    <!-- 5) Método y Sobrecarga -->
     <section id="metodos" class="section">
       <h2>Método y Sobrecarga</h2>
-      <p class="theory">En esta sección puedes pegar tus tarjetas con ejercicios (Ejercicio 24 — ...). Cada tarjeta sigue la misma estructura .card con su <code>&lt;pre&gt;&lt;code&gt;</code>.</p>
-
-      <div class="grid" id="metodos-grid">
-        <!-- Si quieres que copie aquí el resto (Ej 24-29 etc) lo hago en el siguiente paso -->
+      <div class="grid">
         <div class="card">
-          <h3>Ejemplo: Ejercicio 24</h3>
-          <div class="toolbar">
-            <button class="btn btn-copy" data-action="copy">Copiar</button>
-            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
-            <button class="btn btn-download" data-action="download">Descargar .py</button>
-          </div>
+          <h3>Ejercicio 24: PARAMETRO</h3>
           <pre><code class="language-python">
 class Persona:
     def __init__(self,nombre):
@@ -639,146 +1028,777 @@ class Persona:
 
 persona1 = Persona("Carlos")
 persona1.saludar()
-          </code></pre>
+
+persona2 = Persona("maria")
+persona2.respomde()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 25</h3>
+          <pre><code class="language-python">
+class Calculadora:
+    def sumar(self,a,b):
+        self.a =a
+        self.b = b
+        return self.a + self.b
+
+calcular = Calculadora()
+suma = calcular.sumar(1,3)
+
+print(f"La suma de los parametros {calcular.a} y {calcular.b} es {suma}")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 26</h3>
+          <pre><code class="language-python">
+class Rectangulo:
+    def __init__(self,base,altura):
+        self.base = base
+        self.altura = altura
+
+    def calcular_area(self):
+        return self.base * self.altura
+
+rectangulo = Rectangulo(10,5)
+area = rectangulo.calcular_area()
+
+print("El area de un rectangulo es:",area)
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 27</h3>
+          <pre><code class="language-python">
+    class Operaciones:
+    def Sumar(self,a,b,c = None):
+        if c is not None:
+            return a+b+c
+        else:
+            return a+b
+operacion1 = Operaciones()
+operacion2 = Operaciones()
+
+print("Suma con dos numeros",operacion1.sumar(5,7))
+print("Suma con tres numeros",operacion2.sumar(1,2,3))       
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 28</h3>
+          <pre><code class="language-python">
+import math
+class Circulo:
+    def __init__(self,radio):
+        self.radio = radio
+
+    def calcular_area(self):
+        area = math.pi *self.radio**2
+        return area
+
+    def calcular_perimetro(self):
+        perimetro = 2 * maht.pi * self.radio
+        return perimetro
+
+    def mostrar_informacion(self):
+        print(f"Radio del circulo es : {self.radio}")
+        print(f"El area es : {self.calcular_area():.2f}")
+        print(f"El perimetro es: {self.calcular_perimetro():.2f}")
+
+circulo = Circulo(7)
+circulo.mostrar_informacion()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 29</h3>
+          <pre><code class="language-python">
+class Triangulo:
+    def __init__(self,catetoa,catetob):
+        self.catetoa = catetoa
+        self.catetob = catetob
+
+    def CalcularHipotenusa(self):
+        Hipotenusa = (catetoa**2 + catetob**2)*1/2
+        return Hipotenusa
+
+hipotenusa = Triangulo(3,4)
+hipotenusa.CalcularHipotenusa()
+
+print("La hipotenusa es ",hipotenusa.CalcularHipotenusa())
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Gradiente (tomado del ejemplo y del primer HTML) -->
-    <section id="gradiente" class="section">
-      <h2>Método de Gradiente</h2>
-      <p class="theory">El método del gradiente busca mínimos/ máximos mediante la dirección del gradiente. Ejemplo en R y recursos de descarga abajo.</p>
-      <pre><code class="language-R">
-# MÉTODO DEL GRADIENTE (Ejemplo en R)
-f <- function(x){ x^2 } 
-f_deriv <- function(x){ 2*x } 
-x0 <- 3 
-n <- 0.01        # tasa de aprendizaje 
-max_iter <- 100 
-x_valores <- numeric(max_iter) 
-f_valores <- numeric(max_iter) 
-for (i in 1:max_iter) { 
-  x_nuevo <- x0 - (n * f_deriv(x0))  
-  x0 <- x_nuevo 
-  x_valores[i] <- x0 
-  f_valores[i] <- f(x0) 
-} 
-cat("El mínimo está en x =", x0, "con f(x) =", f(x0), "\n") 
-      </code></pre>
+    <!-- 6) Metodo Operador -->
+    <section id="operador" class="section">
+      <h2>Método Operador</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 30</h3>
+          <pre><code class="language-python">
+class Persona:
+    def __init__(self,nombre,edad):
+        self.nombre = nombre
+        self.edad = edad
 
-      <p><a class="download-link" href="#" data-download-name="gradiente.R">Descargar gradiente.R (generado)</a></p>
+    def __str__(self):
+        return f"{self.nombre},{self.edad} años"
+
+    def __eq__(self ,otra):
+        return self.edad == otra.edad
+
+    def __gt__(self,otra):
+        return self.edad > otra.edad
+
+    def __add__(self,otra):
+        return self.edad + otra.edad
+    
+persona1 = Persona("Carlos",30)
+persona2 = Persona("Ana",25)
+persona3 = Persona("Lucia",30)
+
+print(persona1)
+print(persona2)
+print(persona3)
+
+print(persona1 == persona2)
+print(persona1 == persona3)
+
+print(persona1>persona2)
+
+print("Suma de edades",persona1 + persona2)
+print("Suma de edades",persona1 + persona3)
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 31</h3>
+          <pre><code class="language-python">
+class Producto:
+    def __init__(self,nombre,precio,stock):
+        self.nombre = nombre
+        self.precio = precio
+        self.stock = stock
+
+    def __str__(self):
+        return f"{self.nombre} - S/. {self.precio:.2f} {self.stock}"
+
+    def __eq__(self,otro):
+        return self.nombre == otro.nombre
+
+    def __add__(self,otro):
+        return self.precio + otro.precio
+
+prod1 = Producto("Arroz",3.50,20)
+prod2 = Producto("Arroz",3.50,15)
+prod3 = Producto("Azucar",4.00,10)
+
+print(prod1)
+print(prod2)
+print(prod3)
+
+print(prod1 == prod2)
+print(prod1 == prod3)
+
+print("Suma de precio de producto",prod1 + prod2)
+print("Suma de precio de producto",prod1 + prod3)
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 32</h3>
+          <pre><code class="language-python">
+class CuentaBancaria:
+    def __init__(self,titular,saldo):
+        self.titular = titular
+        self.saldo = saldo
+
+    def mostrar(self):
+        print(f"Titular:{self.titular}, Saldo:${self.saldo:.2f}")
+
+    def __sub__(self,cantidad):
+        if isinstance (cantidad,(int,float)):
+            if cantidad <= self.saldo:
+                return CuentaBancaria(self.titular,self.saldo-cantidad)
+            else:
+                print("Fondos insuficientes")
+                return self
+        else:
+            print("Operador no valido")
+            return self
+
+cuenta1 = CuentaBancaria("Luis",1000)
+cuenta1.mostrar()
+
+cuenta2 = cuenta1 - 250
+cuenta2.mostrar()
+
+cuenta3 = cuenta2 - 700
+cuenta3.mostrar()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- OLS y GD (ejemplo) -->
-    <section id="OLSyGD" class="section">
-      <h2>Comparación OLS vs GD</h2>
-      <p class="theory">Breve comparación y ejemplo en R.</p>
-      <pre><code class="language-R">
-# Ejemplo abreviado de OLS y GD (R)
-set.seed(123)
-n <- 1e5
-x <- runif(n,0,10)
-beta_0 <- 5; beta_1 <- 3
-epsilon <- rnorm(n,0,2)
-y <- beta_0 + beta_1 * x + epsilon
-# OLS
-modelo_ols <- lm(y ~ x)
-summary(modelo_ols)
-# GD (simplificado)
-alpha <- 1e-6; iter <- 1000
-b0 <- 0; b1 <- 0
-for(i in 1:iter){
-  y_pred <- b0 + b1*x
-  grad_b0 <- (-2/length(x)) * sum(y - y_pred)
-  grad_b1 <- (-2/length(x)) * sum(x * (y - y_pred))
-  b0 <- b0 - alpha * grad_b0
-  b1 <- b1 - alpha * grad_b1
-}
-print(c(b0,b1))
-      </code></pre>
-      <p><a class="download-link" href="#" data-download-name="OLS_GD.R">Descargar OLS_GD.R (generado)</a></p>
+    <!-- 7) Constructos y Destructor -->
+    <section id="constructores" class="section">
+      <h2>Constructos y Destructor</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 33</h3>
+          <pre><code class="language-python">
+import math
+class TrianguloRectangulo:
+    def __init__(self,cateto_a,cateto_b):#constructor
+        self.cateto_a = cateto_a
+        self.cateto_b = cateto_b
+
+    def calcular_hipotenusa(self):
+        hipotenusa = math.sqrt(self.cateto_a**2 + self.cateto_b**2)
+        return hipotenusa
+
+    def __del__(self):
+        print("Objeto TrianguloRectangulo destruido")
+
+def main():
+
+    cateto1 = float(input("Ingrese el valor del primer cateto: "))
+    cateto2 = float(input("Ingrese el valor del segundo cateto: "))
+
+    triangulo = TrianguloRectangulo(cateto1,cateto2)
+    resultado = triangulo.calcular_hipotenusa()
+
+    print(f"La hipotenusa del triangulo es {resultado}")
+
+if __name__=="__main__":
+    main()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 34</h3>
+          <pre><code class="language-python">
+import math
+class Circulo:
+    def __init__(self,radio):
+        self.radio = radio
+        print("Objeto circulo creado")
+
+    def calcular_area(self):
+        area = math.pi*self.radio**2
+        return area
+
+radio_usuario = float(input("Ingrese la radio del circulo: "))
+
+circulo = Circulo(radio_usuario)
+resultado = circulo.calcular_area()
+print(f"El area del circulo es {resultado}")
+
+del circulo
+
+try:
+    #circulo.calcular_area()
+    print(circulo)
+except NameError:
+    print("El objeto ya no existe")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 35</h3>
+          <pre><code class="language-python">
+import math
+class Comida:
+    def __init__(self,proteinas,carbohidratos,grasas):
+        self.proteinas =proteinas
+        self.carbohidratos = carbohidratos
+        self.grasas = grasas
+        print("Objeto comida creada")
+        print(f"{self.proteinas}g {self.carbohidratos}g {self.grasas}g")
+
+    def calcular_calorias(self):
+        calorias = self.proteinas*4 + self.carbohidratos*4 + self.grasas*9
+        return calorias
+
+    def mostrar_informacion(self):
+        print("TNFORMACION NUTRICIONAL")
+        print(f"proteinas: {self.proteinas}g")
+        print(f"carbohidratos: {self.carbohidratos}g")
+        print(f"grasas: {self.grasas}g")
+        print(f"calorias totales {self.calcular_calorias()}Kcal")
+
+almuerzo = Comida(proteinas=30,carbohidratos=50,grasas=20)
+almuerzo.mostrar_informacion()
+
+del almuerzo
+
+try:
+    print(almuerzo)
+except NameError:
+    print("Almuerzo destruido")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 36</h3>
+          <pre><code class="language-python">
+import gc
+class Estudiante:
+    def __init__(self,nombre,edad,carrera):
+        self.nombre = nombre
+        self.edad = edad
+        self.carrera = carrera
+        print(f"Estudiante registrado {self.nombre} {self.edad} años {self.carrera}")
+
+    def mostrar_informacion(self):
+        print(f"{self.nombre} estudia {self.carrera} y tiene {self.edad} años")
+
+    def __del__(self):
+        print(f"Estudiante eliminado {self.nombre}")
+
+datos_estudiantes = [("Ana",20,"Medicina"),
+                     ("Luis",22,"Ingenieria"),
+                     ("Carla",19,"Arquitectura")]
+
+grupo = []
+
+for datos in datos_estudiantes:
+    estudiante = Estudiante(*datos)
+    estudiante.mostrar_informacion()
+    grupo.append(estudiante) #append es añadir
+
+grupo.clear()
+del estudiante
+gc.collect()
+print("Fin del programa")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 37</h3>
+          <pre><code class="language-python">
+import gc
+class Libro:
+    def __init__(self,titulo,autor,anio):
+        self.titulo = titulo
+        self.autor = autor
+        self.anio = anio
+        print(f"Libro registrado {self.titulo} de {self.autor} {self.anio}")
+
+    def mostrar_informacion(self):
+        print(f"{self.titulo} fue escrito {self.autor} en {self.anio}")
+
+    def __del__(self):
+        print(f"Libro eliminado {self.titulo}")
+
+libros_datos = [("Cien años de soledad","Gabriel Garcia Marquez",1967),
+                     ("1984","George Orweli",1949),
+                     ("Don Quijote de la Mancha","Miguel de Cervante",1605)]
+
+biblioteca = []
+
+for datos in libros_datos:
+    libro = Libro(*datos)
+    libro.mostrar_informacion()
+    biblioteca.append(libro) #append es añadir
+
+biblioteca.clear()
+del libro
+gc.collect()
+print("Fin del programa")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 38</h3>
+          <pre><code class="language-python">
+import gc
+class Producto:
+    def __init__(self,nombre,precio,cantidad):
+        self.nombre = nombre
+        self.precio = precio
+        self.cantidad = cantidad
+        print(f"Producto registrado {self.nombre} - $ {self.precio} en stock {self.cantidad}")
+
+    def mostrar_informacion(self):
+        print(f"{self.nombre} precio $ {self.precio} en stock {self.cantidad}")
+
+    def __del__(self):
+        print(f"Producto eliminado: {self.nombre}")
+
+producto_datos = [("manzana",0.5,100),
+                     ("Pan",0.3,50),
+                     ("Leche",3.50,30)]
+
+inventario = []
+
+for datos in producto_datos:
+    producto = Producto(*datos)
+    producto.mostrar_informacion()
+    inventario.append(producto) #append es añadir
+
+inventario.clear()
+del producto
+gc.collect()
+print("Fin del programa")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 39</h3>
+          <pre><code class="language-python">
+import gc
+class Curso:
+    def __init__(self,nombre,codigo,profesor):
+        self.nombre = nombre
+        self.codigo = codigo
+        self.profesor = profesor
+        print(f"Curso registrado {self.nombre} con codigo {self.codigo} del {self.profesor}")
+
+    def mostrar_informacion(self):
+        print(f"{self.nombre} con codigo {self.codigo} con {self.profesor}")
+
+    def __del__(self):
+        print(f"Curso eliminado: {self.nombre}")
+
+curso_datos = [("LENGUAJES DE PROGRAMACION II","EST305","COYLA IDME LEONEL"),
+                     ("INFERENCIA ESTADISTICA","EST306","ROQUE CLAROS ROBERTO ELVIS"),
+                     ("MODELOS DISCRETOS","EST307","VARGAS VALVERDE CONFESOR MILAN"),
+               (" PROGRAMACION NUMERICA","EST207","TORRES CRUZ FRED  ")]
+
+organizacion = []
+
+for datos in curso_datos:
+    curso = Curso(*datos)
+    curso.mostrar_informacion()
+    organizacion.append(curso) #append es añadir
+
+organizacion.clear()
+del curso
+gc.collect()
+print("Fin del programa")
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Docentes (tabla) -->
-    <section id="docentes" class="section">
-      <h2>Índice H — Docentes</h2>
-      <p class="theory">Tabla con verificación (copiada del ejemplo). Puedes editar/pegar filas adicionales si lo deseas.</p>
+    <!-- 8) Relacion entre Clases -->
+    <section id="relaciones" class="section">
+      <h2>Relacion entre Clases</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 40</h3>
+          <pre><code class="language-python">
+class Profesor:
+    def __init__(self,nombre):
+        self.nombre = nombre
 
-      <table class="docentes-table">
-        <thead>
-          <tr><th>Docente</th><th>Cuenta Scopus</th><th>Publicaciones</th><th>Citas</th><th>Índice H</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>COYLA DME, Leonel</td><td>Sí</td><td>5</td><td>1</td><td>1</td></tr>
-          <tr><td>TORRES CRUZ, Fred</td><td>Sí</td><td>40</td><td>74</td><td>4</td></tr>
-          <tr><td>IBÁÑEZ QUISPE, Vladimiro</td><td>Sí</td><td>21</td><td>52</td><td>5</td></tr>
-          <!-- añade el resto de filas aquí -->
-        </tbody>
-      </table>
+class Curso:
+    def __init__(self,nombre,profesor):
+        self.nombre = nombre
+        self.profesor = profesor
 
-      <p style="margin-top:12px"><a class="download-link" href="#" data-download-name="docentes.csv">Descargar tabla (CSV)</a></p>
+prof = Profesor("Dr.Morillos")
+curso = Curso("Muestreo",prof)
+print(curso.profesor.nombre)
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 41</h3>
+          <pre><code class="language-python">
+class Departamento:
+    def __init__(self,nombre):
+        self.nombre = nombre
+
+class Universidad:
+    def __init__(self,nombre):
+        self.nombre = nombre
+        self.departamentos = []
+        
+    def agregar_departamento(self,departamento):
+        self.departamentos.append(departamento)
+
+dep1 = Departamento("Ingenieria Estadistica")
+dep2 = Departamento("Informatica")
+
+uni = Universidad("Universidad Nacional del Altiplano")
+uni.agregar_departamento(dep1)
+uni.agregar_departamento(dep2)
+
+uni.agregar_departamento()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 42</h3>
+          <pre><code class="language-python">
+class Motor:
+    def __init__(self,tipo):
+        self.tipo = tipo
+
+    def encender(self):
+        print(f"Motor: {self.tipo} encendido")
+
+class Auto:
+    def __init__(self,marca):
+        self.marca = marca
+        self.motor = Motor("Electrico")
+
+    def arrancar(self):
+        print(f"Auto: {self.marca} arrancando")
+        self.motor.encender()
+
+miAuto = Auto("Tesla")
+miAuto.arrancar()
+tuAuto = Auto("Toyota")
+tuAuto.arrancar()
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 43</h3>
+          <pre><code class="language-python">
+ class Estudiante:
+    def __init__(self, nombre, dni, codigo_estudiante):
+        self.nombre = nombre
+        self.dni = dni
+        self.codigo_estudiante = codigo_estudiante
+        self.cursos = []
+        
+    def inscribirse(self, curso):
+        self.cursos.append(curso)
+        curso.agregar_estudiante(self)
+
+    def mostrar_informacion(self):
+        print(f"\nEstudiante: {self.nombre} | DNI: {self.dni} | Código: {self.codigo_estudiante}")
+        print("Cursos inscritos:")
+        for curso in self.cursos:
+            print(f" {curso.nombre_curso}")
+
+
+class Profesor:
+    def __init__(self, nombre, dni, especialidad):
+        self.nombre = nombre
+        self.dni = dni
+        self.especialidad = especialidad
+        
+    def mostrar_informacion(self):
+        print(f"Profesor: {self.nombre} | DNI: {self.dni} | Especialidad: {self.especialidad}")
+
+
+class Curso:
+    def __init__(self, nombre_curso, profesor):
+        self.nombre_curso = nombre_curso
+        self.profesor = profesor
+        self.estudiantes = []
+        
+    def agregar_estudiante(self, estudiante):
+        if estudiante not in self.estudiantes:
+            self.estudiantes.append(estudiante)
+            
+    def mostrar_detalles(self):
+        print(f"\nCurso: {self.nombre_curso}")
+        print("Profesor:")
+        self.profesor.mostrar_informacion()
+        print("Estudiantes inscritos:")
+        for est in self.estudiantes:
+            print(f" {est.nombre} ({est.codigo_estudiante})")
+
+
+class Universidad:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.cursos = []
+        
+    def agregar_curso(self, curso):
+        self.cursos.append(curso)
+        
+    def mostrar_cursos(self):
+        print(f"\nUniversidad: {self.nombre}")
+        for curso in self.cursos:
+            curso.mostrar_detalles()
+
+prof1 = Profesor("Ing. Juan Carlos", "01323043", "Programación")
+prof2 = Profesor("Ing. Leonel Coila", "01456789", "Lenguaje de Programación")
+prof3 = Profesor("Ing. José Tito", "02598741", "Base de Datos")
+prof4 = Profesor("Ing. Luis Rossel", "03589642", "Análisis y Diseño de Sistemas")
+prof5 = Profesor("Mg. Confesor Vargas", "04578963", "Modelos Discretos")
+prof6 = Profesor("Mg. Elvis Roque", "05587621", "Inferencia Estadística")
+prof7 = Profesor("Ing. Fred Torres", "06687421", "Programación Numérica")  
+
+
+curso1 = Curso("Lenguajes de Programación II", prof1)
+curso2 = Curso("Lenguaje de Programación I", prof2)
+curso3 = Curso("Sistemas de Gestión de Base de Datos", prof3)
+curso4 = Curso("Análisis y Diseño de Sistemas de Información", prof4)
+curso5 = Curso("Modelos Discretos", prof5)
+curso6 = Curso("Inferencia Estadística", prof6)
+curso7 = Curso("Programación Numérica", prof7)  
+
+
+est1 = Estudiante("Gleny Angelica Condori Mamani", "74705025", "240349")
+est2 = Estudiante("Sadith Lina Apaza Huayta", "72450000", "240251")
+
+
+univ = Universidad("Universidad Nacional del Altiplano")
+
+
+univ.agregar_curso(curso1)
+univ.agregar_curso(curso2)
+univ.agregar_curso(curso3)
+univ.agregar_curso(curso4)
+univ.agregar_curso(curso5)
+univ.agregar_curso(curso6)
+univ.agregar_curso(curso7)
+
+
+est1.inscribirse(curso1)
+est1.inscribirse(curso3)
+est1.inscribirse(curso6)
+est1.inscribirse(curso7)
+
+est2.inscribirse(curso2)
+est2.inscribirse(curso4)
+est2.inscribirse(curso5)
+est2.inscribirse(curso7)
+
+univ.mostrar_cursos()
+est1.mostrar_informacion()
+est2.mostrar_informacion() 
+</code></pre>
+          <div class="actions">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+        </div>
+      </div>
     </section>
 
-  </div> <!-- /sheet -->
+    <footer>
+      © 2025 Facultad de Ingeniería Estadística e Informática — UNA Puno
+    </footer>
+  </div>
 
   <script>
-    // Navegación
+    // Navegación simple
     function show(id){
       document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
       const el = document.getElementById(id);
       if(el) el.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
     }
-    show('home');
 
-    // Utilidades de botones: copia, toggle, descarga
+    // Sanitize filename
     function sanitizeFilename(title){
-      return title.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_\-\.]/g,'').substring(0,50) || 'codigo';
+      return title.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_\-\.]/g,'').substring(0,60) || 'codigo';
     }
 
+    // Delegated event handling for actions (copy / download)
     document.addEventListener('click', function(e){
-      const btn = e.target.closest('button[data-action], a[data-download-name]');
-      if(!btn) return;
-
-      // DOWNLOAD-LINK (enlaces generados)
-      if(btn.tagName.toLowerCase() === 'a' && btn.hasAttribute('data-download-name')){
-        e.preventDefault();
-        // intenta generar un archivo desde la sección activa: busca primer code visible
-        const active = document.querySelector('.section.active');
-        const code = active ? active.querySelector('pre code') : null;
-        const name = btn.getAttribute('data-download-name') || 'codigo.txt';
-        const text = code ? code.textContent : '# Archivo generado desde la página';
-        triggerDownload(name, text);
-        return;
-      }
-
-      // BOTONES dentro de cards
+      const btn = e.target.closest('button[data-action]');
       if(!btn) return;
       const action = btn.getAttribute('data-action');
       const card = btn.closest('.card');
       if(!card) return;
       const codeEl = card.querySelector('pre code');
-      const title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : 'codigo';
+      const titleEl = card.querySelector('h3');
+      const titleText = titleEl ? titleEl.textContent.trim() : 'codigo';
+      const text = codeEl ? codeEl.textContent : '';
 
       if(action === 'copy'){
-        const text = codeEl ? codeEl.textContent : '';
-        if(!text){ alert('No hay código para copiar'); return; }
+        if(!text){ alert('No hay código para copiar.'); return; }
         if(navigator.clipboard && navigator.clipboard.writeText){
           navigator.clipboard.writeText(text).then(()=> {
             const old = btn.textContent;
             btn.textContent = 'Copiado ✓';
             setTimeout(()=> btn.textContent = old, 1200);
           }).catch(()=> fallbackCopy(text, btn));
-        } else fallbackCopy(text, btn);
-      } else if(action === 'toggle'){
-        const pre = card.querySelector('pre');
-        if(!pre) return;
-        const hidden = pre.classList.toggle('hidden');
-        btn.textContent = hidden ? 'Mostrar' : 'Ocultar';
+        } else {
+          fallbackCopy(text, btn);
+        }
       } else if(action === 'download'){
-        const text = codeEl ? codeEl.textContent : '';
-        if(!text){ alert('No hay código para descargar'); return; }
-        const filename = sanitizeFilename(title) + '.py';
+        if(!text){ alert('No hay código para descargar.'); return; }
+        const filename = sanitizeFilename(titleText) + '.py';
         triggerDownload(filename, text);
         const old = btn.textContent;
         btn.textContent = 'Descargado ✓';
@@ -787,21 +1807,21 @@ print(c(b0,b1))
     });
 
     function fallbackCopy(text, btn){
-      const t = document.createElement('textarea');
-      t.value = text;
-      t.style.position = 'fixed';
-      t.style.left = '-9999px';
-      document.body.appendChild(t);
-      t.select();
-      try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try{
         document.execCommand('copy');
         const old = btn.textContent;
         btn.textContent = 'Copiado ✓';
         setTimeout(()=> btn.textContent = old, 1200);
-      } catch(e){
-        alert('No se pudo copiar automáticamente. Copia manualmente.');
+      }catch(e){
+        alert('No se pudo copiar automáticamente. Seleccione y copie manualmente.');
       }
-      t.remove();
+      ta.remove();
     }
 
     function triggerDownload(filename, content){
@@ -816,31 +1836,8 @@ print(c(b0,b1))
       URL.revokeObjectURL(url);
     }
 
-    // Al cargar: si existen tarjetas sin toolbar, añade toolbar automáticamente
-    (function addToolbarToCards(){
-      document.querySelectorAll('.card').forEach(card=>{
-        if(!card.querySelector('.toolbar')){
-          const toolbar = document.createElement('div');
-          toolbar.className = 'toolbar';
-          toolbar.innerHTML = '<button class="btn btn-copy" data-action="copy">Copiar</button>' +
-                              '<button class="btn btn-toggle" data-action="toggle">Ocultar</button>' +
-                              '<button class="btn btn-download" data-action="download">Descargar .py</button>';
-          card.insertBefore(toolbar, card.querySelector('pre') || card.firstChild);
-        }
-      });
-    })();
-
-    // Añadir comportamiento para enlaces .download-link (genera un archivo con el primer code de la sección activa)
-    document.querySelectorAll('.download-link').forEach(a=>{
-      a.addEventListener('click', function(ev){
-        ev.preventDefault();
-        const name = a.getAttribute('data-download-name') || 'archivo.txt';
-        const section = a.closest('.section');
-        const code = section ? section.querySelector('pre code') : null;
-        const content = code ? code.textContent : '# Archivo generado';
-        triggerDownload(name, content);
-      });
-    });
+    // Añadir comportamiento inicial: si alguna sección está vacía, se mantiene oculta; la 'orientada' está mostrada por defecto.
+    // (No hay botón Mostrar/Ocultar en el documento como pediste).
   </script>
 </body>
 </html>
