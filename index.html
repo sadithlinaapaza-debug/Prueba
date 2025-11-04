@@ -3,30 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Portafolio — Programación Numérica FINESI</title>
+  <title>Lenguaje de Programación 2 — UNA Puno</title>
 
   <!-- Google fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- MathJax -->
-  <script>
-    window.MathJax = {
-      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
-
   <style>
     :root{
-      --bg:#E8F6FF; /* celeste muy claro */
-      --card:#fffef6;
-      --accent:#2b6cb0;
-      --muted:#23415a;
-      --shadow:0 8px 28px rgba(35,65,90,0.08);
-      --radius:16px;
+      --bg:#f8fbff;
+      --sheet:#ffffff;
+      --accent:#9d174d; /* combinado con tu paleta rosada */
+      --muted:#1e293b;
+      --shadow:0 10px 28px rgba(30,41,59,0.06);
+      --radius:14px;
       --mono:'Fira Code', monospace;
       --ui:'Inter', system-ui, Arial, sans-serif;
     }
@@ -34,764 +23,824 @@
     body{
       margin:0;
       font-family:var(--ui);
-      background:var(--bg);
+      background:linear-gradient(180deg,#fde8f3,#fff);
       color:var(--muted);
       -webkit-font-smoothing:antialiased;
-      padding:28px;
+      padding:20px;
     }
 
     .sheet{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
-      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+      background:var(--sheet);
       border-radius:18px;
-      padding:28px;
+      padding:20px;
       box-shadow:var(--shadow);
-      border:1px solid rgba(35,65,90,0.03);
+      border:1px solid rgba(0,0,0,0.04);
     }
 
-    /* Header */
+    /* Header / Hero */
     .hero{
-      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-      border-radius:14px;
-      padding:22px;
-      text-align:center;
-      margin-bottom:20px;
-      box-shadow:0 6px 18px rgba(35,65,90,0.04);
+      display:flex;
+      gap:16px;
+      align-items:center;
+      background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:18px;
     }
-    .hero h1{ margin:4px 0; font-size:20px; color:var(--accent); font-weight:700; letter-spacing:0.02em; text-transform:uppercase; }
-    .hero h2{ margin:6px 0; font-size:18px; color:#034a7a; font-weight:700; text-transform:uppercase; }
-    .hero h3{ margin:6px 0; font-size:16px; color:#0b3d66; font-weight:600; }
-    .hero p{ margin:4px 0; color:var(--muted) }
+    .hero .logos { width:96px; display:flex; gap:8px; align-items:center; }
+    .hero img { width:64px; height:64px; object-fit:contain; border-radius:8px; }
+    .hero .meta { flex:1; text-align:left; }
+    .hero h1{ margin:0; font-size:18px; color:var(--accent); font-weight:700; text-transform:uppercase; }
+    .hero h2{ margin:4px 0 0 0; font-size:14px; color:#6b1f4a; font-weight:700; }
+    .hero p{ margin:6px 0 0 0; font-size:13px; color:var(--muted); }
 
     /* Nav */
-    .nav { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px; }
+    .nav { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-start; margin:10px 0 18px 0; }
     .nav button{
-      background:linear-gradient(180deg,#66a8ff,#007acc);
-      color:white; border:0; padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer;
-      box-shadow:0 6px 14px rgba(3,76,130,0.12);
+      background:linear-gradient(180deg,#f472b6,#9d174d);
+      color:white; border:0; padding:8px 12px; border-radius:10px; font-weight:700; cursor:pointer;
+      box-shadow:0 6px 12px rgba(157,23,77,0.12);
     }
-    .nav button:hover{ transform:translateY(-3px) }
+    .nav button.secondary {
+      background:linear-gradient(180deg,#66a8ff,#007acc);
+      box-shadow:0 6px 12px rgba(3,76,130,0.08);
+    }
 
     /* Sections */
-    .section{ display:none; padding:18px; background:var(--card); border-radius:12px; margin-bottom:18px; box-shadow:0 6px 18px rgba(35,65,90,0.04) }
+    .section{ display:none; padding:18px; background:linear-gradient(180deg, #fff, #fff ); border-radius:12px; margin-bottom:18px; }
     .section.active{ display:block; }
 
     .section h2{ margin-top:0; color:var(--accent); font-size:18px }
-    .theory{ color:#0b3d66; line-height:1.6; margin-bottom:14px; font-size:14px; }
+    .theory{ color:#4b1053; line-height:1.6; margin-bottom:14px; font-size:14px; }
 
-    pre{ background:#fcfeff; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#0b2540; }
-    .download{ color:var(--accent); font-weight:700; text-decoration:none; display:inline-block; margin-top:8px }
-    .back{ display:inline-block; margin-top:12px; text-decoration:none; color:#034a86; font-weight:700; }
+    /* Grid / cards */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+      gap:16px;
+      margin-top:12px;
+    }
+    .card {
+      background:#fff;
+      border:2px solid rgba(244,114,182,0.14);
+      border-radius:12px;
+      padding:12px 12px 14px 12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.03);
+      position:relative;
+      min-height:120px;
+    }
+    .card h3{ margin:4px 0 6px 0; font-size:16px; display:inline-block; color:#7b2051; }
+    .card .toolbar { position:absolute; right:12px; top:12px; display:flex; gap:8px; }
+    .btn {
+      border:0; padding:6px 8px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:700;
+    }
+    .btn-copy{ background:#ffecf6; color:#9d174d; }
+    .btn-toggle{ background:#fff7ed; color:#92400e; }
+    .btn-download{ background:#e6ffef; color:#065f46; }
 
-    /* Table docentes */
+    pre{ background:#fff6fb; padding:12px; border-radius:8px; overflow:auto; font-family:var(--mono); font-size:13px; color:#1e293b; margin-top:40px; white-space:pre; }
+    code{ display:block; white-space:pre; }
+
+    .download-link{ display:inline-block; margin-top:8px; text-decoration:none; font-weight:700; color:var(--accent) }
+
+    /* table docentes */
     .docentes-table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px }
-    .docentes-table th, .docentes-table td{ border:1px solid rgba(35,65,90,0.08); padding:8px; text-align:left }
-    .docentes-table th{ background:linear-gradient(90deg, rgba(43,108,176,0.12), rgba(127,179,255,0.08)); color:var(--muted); font-weight:700 }
+    .docentes-table th, .docentes-table td{ border:1px solid rgba(0,0,0,0.06); padding:8px; text-align:left }
+    .docentes-table th{ background:linear-gradient(90deg, rgba(157,23,77,0.08), rgba(255,182,193,0.04)); color:var(--muted); font-weight:700 }
 
-    /* small screens */
     @media(max-width:720px){
-      .nav{ gap:8px }
-      .hero h1{ font-size:18px }
-      .hero h2{ font-size:16px }
+      .hero{ flex-direction:column; align-items:flex-start; gap:8px }
+      .grid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="sheet">
     <div class="hero">
-      <h1>UNIVERSIDAD NACIONAL DEL ALTIPLANO - PUNO</h1>
-      <h2>INGENIERÍA ESTADÍSTICA E INFORMÁTICA</h2>
-      <h3>Programación Numérica — FINESI</h3>
-      <p><strong>Estudiante:</strong> Sadith Lina Apaza &nbsp; | &nbsp; <strong>Docente:</strong> Ing. Fred Torres Cruz</p>
+      <div class="logos">
+        <img src="logo-facultad.png" alt="Logo Facultad" />
+        <img src="logo-una.png" alt="Logo UNA" />
+      </div>
+      <div class="meta">
+        <h1>Universidad Nacional del Altiplano — Puno</h1>
+        <h2>Facultad de Ingeniería Estadística e Informática</h2>
+        <p><strong>Curso:</strong> Lenguaje de Programación 2 — <strong>Estudiante:</strong> Sadith Lina Apaza Huayta — <strong>Docente:</strong> Ing. Leonel Coyla Idme</p>
+      </div>
     </div>
 
-    <div class="nav">
+    <div class="nav" aria-hidden="false">
       <button onclick="show('home')">Inicio</button>
-      <button onclick="show('mod1')">Módulo 1</button>
-      <button onclick="show('mod2')">Módulo 2</button>
-      <button onclick="show('mod3')">Módulo 3</button>
-      <button onclick="show('mod4')">Módulo 4</button>
-      <button onclick="show('mod5')">Módulo 5</button>
-      <button onclick="show('mod6')">Módulo 6</button>
-      <button onclick="show('mod7')">Módulo 7</button>
-      <button onclick="show('mod8')">Módulo 8</button>
+      <button onclick="show('orientada')">Programación Orientada a Objetos</button>
+      <button onclick="show('selectiva')">Estructura Selectiva</button>
+      <button onclick="show('repetitiva')">Estructura Repetitiva</button>
+      <button onclick="show('encapsulamiento')">Encapsulamiento</button>
+      <button onclick="show('metodos')">Método & Sobrecarga</button>
+      <button onclick="show('operador')">Método Operador</button>
+      <button onclick="show('constructores')">Constructores & Destructores</button>
+      <button onclick="show('relaciones')">Relación entre Clases</button>
+      <button class="secondary" onclick="show('gradiente')">Gradiente</button>
+      <button class="secondary" onclick="show('OLSyGD')">OLS y GD</button>
       <button onclick="show('docentes')">Docentes</button>
     </div>
 
-    <!-- HOME / INSTRUCCIONES -->
+    <!-- HOME -->
     <section id="home" class="section active">
       <h2>Bienvenido/a</h2>
-      <p class="theory">Selecciona un módulo para ver la teoría, la fórmula y el código Python. Los códigos están tal cual como los entregaste; no han sido modificados. En la sección "Docentes" encontrarás la tabla completa con 31 docentes y un resumen estadístico.</p>
-      <p>Usa los botones de arriba para navegar. Cada módulo tiene un botón para volver aquí.</p>
+      <p class="theory">Este portafolio reúne ejercicios y ejemplos del curso Lenguaje de Programación 2. Usa la navegación para moverte entre secciones. Cada tarjeta de código tiene acciones rápidas: <em>Copiar</em>, <em>Mostrar/Ocultar</em> y <em>Descargar .py</em>.</p>
     </section>
 
-    <!-- Módulo 1 -->
-    <section id="mod1" class="section">
-      <h2>Módulo 1 — Analizador de funciones</h2>
-      <p class="theory">El analizador identifica variables y operaciones en una expresión matemática. Esto ayuda a preprocesar la función antes de evaluarla o graficarla, detectar símbolos no válidos y preparar la expresión para métodos numéricos.</p>
+    <!-- Programación Orientada a Objetos (copiado de tu primer archivo) -->
+    <section id="orientada" class="section">
+      <h2>Programación Orientada a Objetos</h2>
 
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">class Analizador:
-    def __init__(self, funcion):
-        self.funcion = funcion
+      <div class="grid">
+        <!-- EJERCICIO 1 -->
+        <div class="card">
+          <h3>Ejercicio 1</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
 
-    def obtener_variables(self):
-        variables = []
-        for caracter in self.funcion:
-            if caracter.isalpha() and caracter not in variables:
-                variables.append(caracter)
-        return variables
+          <pre><code class="language-python">
+class Coche:
+    def __init__(self,marca,modelo,color):
+        self.marca = marca
+        self.modelo = modelo
+        self.color = color
 
-    def obtener_operaciones(self):
-        operaciones = []
-        for caracter in self.funcion:
-            if caracter in "+-*/":
-                operaciones.append(caracter)
-        return operaciones
+    def mostrar_info(self):
+        print(f"Coche:{self.marca} {self.modelo} {self.color}")
 
-funcion = input("Escribe una función matemática: ")
+    def arrancar(self):
+        print(f"Coche {self.marca} {self.modelo} ha arrancado ")
 
-analizador = Analizador(funcion)
+# Solicitar datos al usuario
+marca = input("Ingrese la marca del coche")
+modelo = input("Ingrese el modelo del auto")
+color = input("Ingrese el color del coche")
+        
+# Crear un objeto
+mi_coche = Coche(marca, modelo, color)
 
-print("
- RESULTADO ")
-print("Variables encontradas:", analizador.obtener_variables())
-print("Operaciones encontradas:", analizador.obtener_operaciones())</code></pre>
+# Usar los métodos
+mi_coche.mostrar_info()
+mi_coche.arrancar()
+          </code></pre>
+        </div>
 
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+        <!-- EJERCICIO 2 -->
+        <div class="card">
+          <h3>Ejercicio 2</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+
+          <pre><code class="language-python">
+class Pitagoras:
+    def __init__(self,catetoa,catetob):
+       self.catetoa = catetoa
+       self.catetob = catetob
+
+    def calcular_hipotenusa(self):
+        return (self.catetoa**2 + self.catetob**2)**(1/2)
+
+#Solicitud
+catetoa = float(input("Ingrese cateto a = "))
+catetob = float(input("Ingrese cateto b = "))
+
+operacion = Pitagoras(catetoa,catetob)
+
+print("La hipotenusa es ",operacion.calcular_hipotenusa())   
+          </code></pre>
+        </div>
+
+        <!-- EJERCICIO 3 -->
+        <div class="card">
+          <h3>Ejercicio 3</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+
+          <pre><code class="language-python">
+class Rectangulo:
+    def __init__(self,base,altura):
+        self.base = base
+        self.altura = altura
+
+    def area(self):
+        return (self.base * self.altura)
+
+    def perimetro(self):
+        return (self.base*2 + self.altura*2)
+
+operacion_area = Rectangulo(5,6)
+operacion_perimetro = Rectangulo(5,6)
+
+print("El area es ",operacion_area.area())
+
+print("El perimetro es ",operacion_perimetro.perimetro())
+          </code></pre>
+        </div>
+
+        <!-- EJERCICIO 4 -->
+        <div class="card">
+          <h3>Ejercicio 4</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+
+          <pre><code class="language-python">
+class CantidadLadrillos:
+    def __init__(self,longuitud,altura,ancho,Jh,Jv):
+        self.longuitud = longuitud
+        self.altura = altura
+        self.ancho = ancho
+        self.Jh = 0.015
+        self.Jv = 0.015
+
+    def Cantidad_de_ladrillos(self):
+        return (1/((longuitud + Jh) * (altura + Jv)))
+
+#Solicitar
+
+longuitud = float(input("Ingresar longuitud: "))
+altura = float(input("Ingresar altura: "))
+ancho = float(input("Ingresar ancho: "))
+Jh = 0.015
+Jv = 0.015
+
+operacion = CantidadLadrillos(longuitud,altura,ancho,Jh,Jv)
+print("La cantidad es ",operacion.Cantidad_de_ladrillos(),"m^2 sin desperdicio")
+print("La cantidad es ",operacion.Cantidad_de_ladrillos()*1.05,"m^2 con desperdicio")
+print("el area",operacion.Cantidad_de_ladrillos()*8.05*ancho,"m^2")
+          </code></pre>
+        </div>
+      </div>
     </section>
 
-    <!-- Módulo 2 -->
-    <section id="mod2" class="section">
-      <h2>Módulo 2 — Graficadora</h2>
-      <p class="theory">La graficadora transforma expresiones en representaciones visuales (en este caso ASCII) para funciones lineales. Para $y = mx + b$, la pendiente $m$ y la ordenada al origen $b$ determinan la inclinación y la posición de la recta.</p>
-      <p><strong>Fórmula</strong>: \( y = m x + b \)</p>
+    <!-- Estructura Selectiva (ejemplos copiados) -->
+    <section id="selectiva" class="section">
+      <h2>Estructura Selectiva</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 5</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Numero:
+    def __init__(self,valor):
+        self.valor = valor
 
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">class GraficadoraLineal:
-    def __init__(self, expresion1, expresion2):
-        self.expresion1 = expresion1
-        self.expresion2 = expresion2
-        self.x = []
-        self.y1 = []
-        self.y2 = []
-
-    def generar_valores(self):
-        x = -10
-        while x <= 10:
-            self.x.append(x)
-            self.y1.append(eval(self.expresion1))
-            self.y2.append(eval(self.expresion2))
-            x = x + 1
-
-    def graficar_consola(self):
-        for i in range(len(self.x)):
-            espacios1 = " " * (self.y1[i] + 20)
-            linea = f"x={self.x[i]:>3} | {espacios1}*"
-
-            espacios2 = " " * (self.y2[i] + 20)
-            linea2 = f"{espacios2}#"
-
-            print(linea + linea2)
-
-f1 = input("Ingresa la primera funcion lineal: ")
-f2 = input("Ingresa la segunda funcion lineal: ")
-
-mi_grafica = GraficadoraLineal(f1, f2)
-mi_grafica.generar_valores()
-mi_grafica.graficar_consola()</code></pre>
-
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
-    </section>
-
-    <!-- Módulo 3 -->
-    <section id="mod3" class="section">
-      <h2>Módulo 3 — Restricciones</h2>
-      <p class="theory">Las restricciones delimitan regiones del dominio donde la función es válida. Útiles en optimización para definir regiones factibles. En tu código, las restricciones se evalúan punto por punto y se muestra una cuadrícula ASCII con los puntos factibles marcados.</p>
-
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">
-          class Restriccion:
-    def __init__(self, expresion):
-        self.expresion = expresion.replace(" ", "")
-
-    def cumple(self, x, y):
-        expr = self.expresion.replace("x", str(x)).replace("y", str(y))
-        try:
-            return eval(expr)
-        except Exception as e:
-            print("Error evaluando la restricción:", self.expresion, "->", e)
-            return False
-
-class ProblemaASCII:
-    def __init__(self):
-        self.restricciones = []
-
-    def ingresar_datos(self):
-        n = int(input("¿Cuántas restricciones?: ").strip())
-        for i in range(n):
-            r = input(f"Restricción #{i+1}: ")
-            self.restricciones.append(Restriccion(r))
-
-        print("\n--- RANGOS ---")
-        self.x_min = int(input("x mínimo : ").strip())
-        self.x_max = int(input("x máximo : ").strip())
-        self.y_min = int(input("y mínimo : ").strip())
-        self.y_max = int(input("y máximo : ").strip())
-
-        paso = input("Paso de la cuadrícula (enteros, por defecto 1): ").strip()
-        self.step = int(paso) if paso != "" else 1
-
-    def punto_factible(self, x, y):
-        for r in self.restricciones:
-            if not r.cumple(x, y):
-                return False
-        return True
-
-    def listar_puntos_factibles(self):
-        factibles = []
-        for y in range(self.y_min, self.y_max + 1, self.step):
-            for x in range(self.x_min, self.x_max + 1, self.step):
-                if self.punto_factible(x, y):
-                    factibles.append((x, y))
-        return factibles
-
-    def imprimir_ascii(self):
-        xs = list(range(self.x_min, self.x_max + 1, self.step))
-        ys = list(range(self.y_min, self.y_max + 1, self.step))
-
-        print("\n=== GRÁFICA  ===")
-        header = "    " 
-        for x in xs:
-            if (x - self.x_min) % (max(1, (len(xs)//10))) == 0:
-                header += f"{str(x).rjust(2)}"
-            else:
-                header += "  "
-        print(header)
-
-        for y in reversed(ys): 
-            line = f"{str(y).rjust(3)} "  
-            for x in xs:
-                if self.punto_factible(x, y):
-                    line += " #"
-                else:
-                    line += " ."
-            print(line)
-
-        footer = "    "
-        for x in xs:
-            if (x - self.x_min) % (max(1, (len(xs)//10))) == 0:
-                footer += f"{str(x).rjust(2)}"
-            else:
-                footer += "  "
-        print(footer)
-        print("\nLeyenda: '#' punto factible, '.' no factible.")
-
-    def ejecutar(self):
-        self.ingresar_datos()
-        factibles = self.listar_puntos_factibles()
-        if not factibles:
-            print("\nNo se encontraron puntos factibles en el rango dado.")
+    def clasificar(self):
+        if self.valor == 0:
+            return "Nulo"
+        elif self.valor%2 == 0:
+            return "Par"
         else:
-            print(f"\nSe encontraron {len(factibles)} puntos factibles:")
-            for p in factibles[:20]:
-                print(" ", p)
-        self.imprimir_ascii()
+            return "Impar"
+ejemplos = [Numero(0),Numero(2),Numero(5)]
+
+for num in ejemplos:
+    tipo = num.clasificar()
+    print(f"El numero {num.valor} es {tipo}")
+          </code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 6</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Persona:
+    def __init__(self,nombre,edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def es_mayor_de_edad(self):
+        if self.edad >= 18:
+            return True
+        else:
+            return False 
+
+persona = Persona("Maria",25)
+
+if persona.es_mayor_de_edad():
+    print(f"La persona {persona.nombre} es mayor de edad")
+
+else:
+    print(f"La persona {persona.nombre} es menor de edad")  
+          </code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 7</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Empleado:
+    def __init__(self,Nombre,Cargo,Salario):
+        self.Nombre = Nombre
+        self.Cargo = Cargo
+        self.Salario = Salario
+
+    def AplicarAumento(self):
+        if self.Cargo == "Gerente":
+            porcentaje = 0.1
+        elif self.Cargo == "Supervisor":
+            porcentaje = 0.07
+        elif self.Cargo == "Operario":
+            porcentaje = 0.05
+        else:
+            porcentaje = 0
+
+        NuevoSalario = self.Salario *(1 + porcentaje)
+        return NuevoSalario
+    
+Nombre = float(input("Ingrese Nombre"))
+Cargo = float(input("Ingrese Cargo"))
+Salarion = float(input("Ingrese Salario"))
+
+nuevo = self.Salario *(1 + porcentaje)
+    
+print(f"{emp.Nombre} {emp.Cargo}: salario nuevo = {nuevo:2f}")  
+          </code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Tarea 1: Signos del Zodiaco</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Persona:
+    def __init__(self, nombre, dia, mes):
+        self.nombre = nombre
+        self.dia = dia
+        self.mes = mes
+
+    def signo(self):
+        if (self.mes == "enero" and self.dia >= 20) or (self.mes == "febrero" and self.dia <= 18):
+            return "Acuario"
+        elif (self.mes == "febrero" and self.dia >= 19) or (self.mes == "marzo" and self.dia <= 20):
+            return "Piscis"
+        elif (self.mes == "marzo" and self.dia >= 21) or (self.mes == "abril" and self.dia <= 19):
+            return "Aries"
+        elif (self.mes == "abril" and self.dia >= 20) or (self.mes == "mayo" and self.dia <= 20):
+            return "Tauro"
+        elif (self.mes == "mayo" and self.dia >= 21) or (self.mes == "junio" and self.dia <= 20):
+            return "Géminis"
+        elif (self.mes == "junio" and self.dia >= 21) or (self.mes == "julio" and self.dia <= 22):
+            return "Cáncer"
+        elif (self.mes == "julio" and self.dia >= 23) or (self.mes == "agosto" and self.dia <= 22):
+            return "Leo"
+        elif (self.mes == "agosto" and self.dia >= 23) or (self.mes == "septiembre" and self.dia <= 22):
+            return "Virgo"
+        elif (self.mes == "septiembre" and self.dia >= 23) or (self.mes == "octubre" and self.dia <= 22):
+            return "Libra"
+        elif (self.mes == "octubre" and self.dia >= 23) or (self.mes == "noviembre" and self.dia <= 21):
+            return "Escorpio"
+        elif (self.mes == "noviembre" and self.dia >= 22) or (self.mes == "diciembre" and self.dia <= 21):
+            return "Sagitario"
+        elif (self.mes == "diciembre" and self.dia >= 22) or (self.mes == "enero" and self.dia <= 19):
+            return "Capricornio"
+        else:
+            return "Fecha inválida"
+
+nombre = input("Ingresa tu nombre: ")
+dia = float(input("Ingresa tu día de nacimiento: "))
+mes = input("Ingresa tu mes de nacimiento: ")
+
+persona = Persona(nombre,dia,mes)
+print(f"{persona.nombre} nacio el {persona.dia} de {persona.mes} y tu signo es {persona.signo()}")  
+          </code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estructura Repetitiva (ejemplos) -->
+    <section id="repetitiva" class="section">
+      <h2>Estructura Repetitiva</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 8</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Factorial:
+    def __init__(self,numero):
+        self.numero = numero
+        self.resultado = 1
+
+    def calcular(self):
+        if self.numero < 0:
+            print("El factorial no esta definido para numeros negativos")
+            return None
+        for i in range(1,self.numero+1):
+            self.resultado *= i
+        return self.resultado
 
 def main():
-    prog = ProblemaASCII()
-    prog.ejecutar()
+        miFactorial = Factorial(5)
+        resultado = miFactorial.calcular()
+        if resultado is not None:
+            print(f"El factorial de {miFactorial.numero} es {resultado}")
+if __name__=="__main__":
+    main()   
+          </code></pre>
+        </div>
 
-if __name__ == "__main__":
+        <div class="card">
+          <h3>Ejercicio 9</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Fibonaci:
+    def __init__(self,cantidad):
+        self.cantidad = cantidad
+        self.serie = []
+
+    def generarSerie(self):
+        a,b =0,1
+        for _ in range(self.cantidad):
+            self.serie.append(a)
+            a,b=b,a+b
+        return self.serie
+
+def main():
+    miFibonaci = Fibonaci(10)
+    resultado = miFibonaci.generarSerie()
+    print(resultado)
+if __name__=="__main__":
+    main()   
+          </code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Ejercicio 10</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class TabladeMultiplicar:
+    def __init__(self,numero):
+        self.numero = numero
+
+    def generarTabla(self):
+        for i in range(1, 11):
+            resultado = self.numero*i
+            print(f"{self.numero} x {i} = {resultado}")
+
+def main():
+    numero = int(input("Ingrese un numero "))
+    miTabla = TabladeMultiplicar(numero)
+    miTabla.generarTabla()
+
+if __name__=="__main__":
     main()
-        </code></pre>
+          </code></pre>
+        </div>
 
-      <a class="download" href="Restricciones.py" download>Descargar Restricciones.py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+        <!-- Nota: rest of repetitiva cards can be added following same pattern -->
+      </div>
     </section>
 
-    <!-- Módulo 4 -->
-    <section id="mod4" class="section">
-      <h2>Módulo 4 — Método Newton Raphson</h2>
-      <p class="theory">Newton-Raphson es un método iterativo para encontrar raíces mediante la fórmula $x_{n+1}=x_n - f(x_n)/f'(x_n)$. Converge rápidamente si la aproximación inicial es buena y la derivada no se anula.</p>
+    <!-- Encapsulamiento (ejemplos) -->
+    <section id="encapsulamiento" class="section">
+      <h2>Encapsulamiento</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Ejercicio 19</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class leerNumero:
+    def __init__(self,numero):
+        self.numero = numero
 
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">import math
+    def Rango_Numero(self):
+        if 1 <= self.numero <= 10:
+            print(f"El numero {self.numero} esta dentro de los 10 primeros")
+        elif self.numero < 1:
+            diferencia = 0 - self.numero
+            print(f"El numero {self.numero} es {diferencia} menos que 1")
+        else:
+            diferencia = self.numero - 10
+            print(f"El numero {self.numero} es {diferencia} mas que 10")
 
-class NewtonRaphson:
-    def __init__(self):
-        pass
+def main():
+    valor = int(input("Ingresa un numero del 1 al 10: "))
+    numero = leerNumero(valor)
+    numero.Rango_Numero()
+if __name__=="__main__":
+    main()
+          </code></pre>
+        </div>
 
-    def f(self, x, expr):
-        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
+        <div class="card">
+          <h3>Ejercicio 20</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Persona:
+    def __init__(self,nombre,edad):
+        self.__nombre = nombre #atributo privado
+        self.__edad = edad #atributo privado
 
-    def ejecutar(self):
-        expr = input("Ingrese f(x): ").strip()
-        dexpr = input("Ingrese f'(x): ").strip()
-        x0 = float(input("x0: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones maximas: "))
-        x = x0
-        for i in range(1, maxit+1):
-            fx = self.f(x, expr)
-            dfx = self.f(x, dexpr)
-            if dfx == 0:
-                print("Derivada cero. Deteniendo.")
-                return
-            x_new = x - fx/dfx
-            if abs(x_new - x) < tol:
-                print(f"Raíz: {x_new}")
-                print(f"f(raíz): {self.f(x_new, expr)}")
-                print(f"Iteraciones: {i}")
-                return
-            x = x_new
-        print(f"Resultado tras {maxit} iter: {x}")
-        print(f"f(aprox): {self.f(x, expr)}")
+    def get_edad(self):
+        return self.__edad
 
-if __name__ == "__main__":
-    NewtonRaphson().ejecutar()</code></pre>
+    def get_nombre(self):
+        return self.__nombre
 
-      <a class="download" href="Newton Raphson.py" download>Descargar Newton Raphson.py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+    def set_edad(self,nueva_edad):
+        if nueva_edad > 0:
+            self.__edad = nueva_edad
+        else:
+            print("Edad no valida")
+
+    def set_nombre(self,nuevo_nombre):
+        self.__nombre = nuevo_nombre
+        return self.__nombre
+    
+persona = Persona("Ana",30)
+print(persona.get_nombre())
+print(persona.get_edad())
+print(persona.get_nombre(),persona.get_edad())
+
+persona.set_edad(35)
+persona.set_nombre("Maria")
+print(persona.get_edad())
+print(persona.get_nombre())
+print(persona.get_nombre(),persona.get_edad())
+          </code></pre>
+        </div>
+      </div>
     </section>
 
-    <!-- Módulo 5 -->
-    <section id="mod5" class="section">
-      <h2>Módulo 5 — Método Punto Fijo</h2>
-      <p class="theory">El método de punto fijo reescribe $f(x)=0$ como $x=g(x)$ y aplica iteraciones $x_{n+1}=g(x_n)$. Convergencia si $|g'(x)|<1$ en el intervalo.</p>
+    <!-- Métodos y demás secciones: plantilla para pegar el resto -->
+    <section id="metodos" class="section">
+      <h2>Método y Sobrecarga</h2>
+      <p class="theory">En esta sección puedes pegar tus tarjetas con ejercicios (Ejercicio 24 — ...). Cada tarjeta sigue la misma estructura .card con su <code>&lt;pre&gt;&lt;code&gt;</code>.</p>
 
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">
-          import math
+      <div class="grid" id="metodos-grid">
+        <!-- Si quieres que copie aquí el resto (Ej 24-29 etc) lo hago en el siguiente paso -->
+        <div class="card">
+          <h3>Ejemplo: Ejercicio 24</h3>
+          <div class="toolbar">
+            <button class="btn btn-copy" data-action="copy">Copiar</button>
+            <button class="btn btn-toggle" data-action="toggle">Ocultar</button>
+            <button class="btn btn-download" data-action="download">Descargar .py</button>
+          </div>
+          <pre><code class="language-python">
+class Persona:
+    def __init__(self,nombre):
+        self.nombre = nombre
 
-class PuntoFijo:
-    def __init__(self):
-        pass
+    def saludar(self):
+        print(f"Hola, soy {self.nombre}")
 
-    def g(self, x, expr):
-        safe_locals = {
-            "x": x,
-            "ln": math.log,        
-            "log": math.log,       
-            "log10": math.log10,   
-            "exp": math.exp,
-            "sqrt": math.sqrt,
-            "e": math.e,
-            "pi": math.pi,
-            **{k: getattr(math, k) for k in dir(math) if not k.startswith("__")}
-        }
-        return eval(expr, {"__builtins__": None}, safe_locals)
+    def respomde(self):
+        print(f"Hola {self.nombre}")
 
-    def ejecutar(self):
-        expr = input("Ingrese g(x) para x = g(x) (ej: (x+2/x)/2 o ln(x+1)): ").strip()
-        x0 = float(input("x0: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones máximas: "))
-
-        x = x0
-        for i in range(1, maxit + 1):
-            x_new = self.g(x, expr)
-            error = abs((x_new - x) / x_new) * 100 if x_new != 0 else float('inf')
-
-            print(f"Iteración {i}: x = {x_new:.10f}, Error = {error:.6f}%")
-
-            if error < tol * 100:  
-                print(f"\nPunto fijo: {x_new}")
-                print(f"Iteraciones: {i}")
-                print(f"Error porcentual final: {error:.6f}%")
-                return
-
-            x = x_new
-
-        print(f"\nResultado tras {maxit} iteraciones: {x}")
-        print(f"Error porcentual final: {error:.6f}%")
-
-if __name__ == "__main__":
-    PuntoFijo().ejecutar()
-    </code></pre>
-
-      <a class="download" href="punto fijo.py" download>Descargar Punto Fijo 1.py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+persona1 = Persona("Carlos")
+persona1.saludar()
+          </code></pre>
+        </div>
+      </div>
     </section>
 
-    <!-- Módulo 6 -->
-    <section id="mod6" class="section">
-      <h2>Módulo 6 — Método de Bisección</h2>
-      <p class="theory">Bisección localiza una raíz en un intervalo con cambio de signo: divide repetidamente y mantiene el subintervalo que contiene la raíz. Garantía de convergencia aunque lenta (lineal).</p>
+    <!-- Gradiente (tomado del ejemplo y del primer HTML) -->
+    <section id="gradiente" class="section">
+      <h2>Método de Gradiente</h2>
+      <p class="theory">El método del gradiente busca mínimos/ máximos mediante la dirección del gradiente. Ejemplo en R y recursos de descarga abajo.</p>
+      <pre><code class="language-R">
+# MÉTODO DEL GRADIENTE (Ejemplo en R)
+f <- function(x){ x^2 } 
+f_deriv <- function(x){ 2*x } 
+x0 <- 3 
+n <- 0.01        # tasa de aprendizaje 
+max_iter <- 100 
+x_valores <- numeric(max_iter) 
+f_valores <- numeric(max_iter) 
+for (i in 1:max_iter) { 
+  x_nuevo <- x0 - (n * f_deriv(x0))  
+  x0 <- x_nuevo 
+  x_valores[i] <- x0 
+  f_valores[i] <- f(x0) 
+} 
+cat("El mínimo está en x =", x0, "con f(x) =", f(x0), "\n") 
+      </code></pre>
 
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">
-        import math
-
-class Biseccion:
-    def __init__(self):
-        pass
-
-    def f(self, x, expr):
-        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
-
-    def ejecutar(self):
-        expr = input("Ingrese f(x) como expresión en Python (ej: x**3-2*x-5): ").strip()
-        a = float(input("a: "))
-        b = float(input("b: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones maximas: "))
-        fa = self.f(a, expr)
-        fb = self.f(b, expr)
-        if fa * fb > 0:
-            print("No hay cambio de signo en el intervalo.")
-            return
-        for i in range(1, maxit+1):
-            c = (a + b) / 2.0
-            fc = self.f(c, expr)
-            if abs(fc) == 0 or (b - a) / 2.0 < tol:
-                print(f"Raíz: {c}")
-                print(f"f(raíz): {fc}")
-                print(f"Iteraciones: {i}")
-                return
-            if fa * fc < 0:
-                b = c
-                fb = fc
-            else:
-                a = c
-                fa = fc
-        print(f"Raíz aproximada tras {maxit} iter: {c}")
-        print(f"f(raíz): {fc}")
-
-if __name__ == "__main__":
-    Biseccion().ejecutar()
-    </code></pre>
-
-      <a class="download" href="Método de Bisección.py" download>Descargar Método de Bisección .py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+      <p><a class="download-link" href="#" data-download-name="gradiente.R">Descargar gradiente.R (generado)</a></p>
     </section>
 
-    <!-- Módulo 7 -->
-    <section id="mod7" class="section">
-      <h2>Módulo 7 — Método de Regula Falsi (Falsa Posición)</h2>
-      <p class="theory">Regula Falsi usa la secante entre los extremos del intervalo para aproximar la raíz: puede converger más rápido que bisección pero en algunos casos se estanca.</p>
-
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">
-        import math
-
-class RegulaFalsi:
-    def __init__(self):
-        pass
-
-    def f(self, x, expr):
-        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
-
-    def ejecutar(self):
-        expr = input("Ingrese f(x) como expresión en Python (ej: x**3-2*x-5): ").strip()
-        a = float(input("a: "))
-        b = float(input("b: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones maximas: "))
-        fa = self.f(a, expr)
-        fb = self.f(b, expr)
-        if fa * fb > 0:
-            print("No hay cambio de signo en el intervalo.")
-            return
-        c = a
-        for i in range(1, maxit+1):
-            c = (a * fb - b * fa) / (fb - fa)
-            fc = self.f(c, expr)
-            if abs(fc) < tol:
-                print(f"Raíz: {c}")
-                print(f"f(raíz): {fc}")
-                print(f"Iteraciones: {i}")
-                return
-            if fa * fc < 0:
-                b = c
-                fb = fc
-            else:
-                a = c
-                fa = fc
-        print(f"Raíz aproximada tras {maxit} iter: {c}")
-        print(f"f(raíz): {self.f(c, expr)}")
-
-if __name__ == "__main__":
-    RegulaFalsi().ejecutar()
-
-    </code></pre>
-
-      <a class="download" href="Método de Regula Falsi (Falsa Posición).py" download>Descargar Método de Regula Falsi (Falsa Posición).py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
+    <!-- OLS y GD (ejemplo) -->
+    <section id="OLSyGD" class="section">
+      <h2>Comparación OLS vs GD</h2>
+      <p class="theory">Breve comparación y ejemplo en R.</p>
+      <pre><code class="language-R">
+# Ejemplo abreviado de OLS y GD (R)
+set.seed(123)
+n <- 1e5
+x <- runif(n,0,10)
+beta_0 <- 5; beta_1 <- 3
+epsilon <- rnorm(n,0,2)
+y <- beta_0 + beta_1 * x + epsilon
+# OLS
+modelo_ols <- lm(y ~ x)
+summary(modelo_ols)
+# GD (simplificado)
+alpha <- 1e-6; iter <- 1000
+b0 <- 0; b1 <- 0
+for(i in 1:iter){
+  y_pred <- b0 + b1*x
+  grad_b0 <- (-2/length(x)) * sum(y - y_pred)
+  grad_b1 <- (-2/length(x)) * sum(x * (y - y_pred))
+  b0 <- b0 - alpha * grad_b0
+  b1 <- b1 - alpha * grad_b1
+}
+print(c(b0,b1))
+      </code></pre>
+      <p><a class="download-link" href="#" data-download-name="OLS_GD.R">Descargar OLS_GD.R (generado)</a></p>
     </section>
 
-    <!-- Módulo 8 -->
-    <section id="mod8" class="section">
-      <h2>Módulo 8 — Método de la Secante</h2>
-      <p class="theory">La secante aproxima la derivada con una diferencia finita entre dos puntos; no requiere la derivada explícita y suele converger más rápido que bisección en muchos casos.</p>
-
-      <h3>Código (sin modificar)</h3>
-      <pre><code class="language-python">
-        import math
-
-class Secante:
-    def __init__(self):
-        pass
-
-    def f(self, x, expr):
-        return eval(expr, {"__builtins__":None}, {"x":x, **math.__dict__})
-
-    def ejecutar(self):
-        expr = input("Ingrese f(x) : ").strip()
-        x0 = float(input("x0: "))
-        x1 = float(input("x1: "))
-        tol = float(input("Tolerancia (ej: 1e-6): "))
-        maxit = int(input("Iteraciones maximas: "))
-        f0 = self.f(x0, expr)
-        f1 = self.f(x1, expr)
-        for i in range(1, maxit+1):
-            denom = (f1 - f0)
-            if denom == 0:
-                print("Denominador cero. Deteniendo.")
-                return
-            x2 = x1 - f1 * (x1 - x0) / denom
-            if abs(x2 - x1) < tol:
-                print(f"Raíz: {x2}")
-                print(f"f(raíz): {self.f(x2, expr)}")
-                print(f"Iteraciones: {i}")
-                return
-            x0, f0 = x1, f1
-            x1, f1 = x2, self.f(x2, expr)
-        print(f"Resultado tras {maxit} iter: {x1}")
-        print(f"f(aprox): {self.f(x1, expr)}")
-
-if __name__ == "__main__":
-    Secante().ejecutar()
-
-
-    </code></pre>
-
-      <a class="download" href="secante).py" download>Descargar secante.py</a>
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
-    </section>
-
-    <!-- Sección FINAL: Índice H de los docentes (31 docentes) -->
+    <!-- Docentes (tabla) -->
     <section id="docentes" class="section">
-      <h2>ÍNDICE H DE LOS DOCENTES DE FINESI</h2>
-      <p>La siguiente tabla muestra la verificación en Scopus (si se encontró cuenta), número de documentos, citas e índice h.</p>
+      <h2>Índice H — Docentes</h2>
+      <p class="theory">Tabla con verificación (copiada del ejemplo). Puedes editar/pegar filas adicionales si lo deseas.</p>
 
-      <table class="docentes-table" id="tabla-docentes">
+      <table class="docentes-table">
         <thead>
-          <tr>
-            <th>Docente (APELLIDO, Nombre)</th>
-            <th>Cuenta Scopus</th>
-            <th>Publicaciones</th>
-            <th>Citas</th>
-            <th>Índice H</th>
-          </tr>
+          <tr><th>Docente</th><th>Cuenta Scopus</th><th>Publicaciones</th><th>Citas</th><th>Índice H</th></tr>
         </thead>
         <tbody>
-          <tr><td>ALVAREZ ROZAS, Teresa paola</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>APAZA CUTIPA, Renzo</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>APAZA TARQUI, Alejandro</td><td>Sí</td><td>5</td><td>6</td><td>1</td></tr>
-          <tr><td>CANQUI FLORES, Bernabé</td><td>Sí</td><td>8</td><td>20</td><td>3</td></tr>
-          <tr><td>CARPIO VARGAS, Edgar eloy</td><td>Sí</td><td>9</td><td>26</td><td>3</td></tr>
           <tr><td>COYLA DME, Leonel</td><td>Sí</td><td>5</td><td>1</td><td>1</td></tr>
-          <tr><td>GONZALES ACHATA, Alfredo ernesto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>JUAREZ VARGAS, Juan carlos</td><td>Sí</td><td>3</td><td>2</td><td>1</td></tr>
-          <tr><td>LLUEN VALLEJOS, Cesar augusto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>LOPEZ CUEVA, Milton antonio</td><td>Sí</td><td>6</td><td>2</td><td>1</td></tr>
-          <tr><td>MENDOZA MOLLOCONDO, Charles ignacio</td><td>Sí</td><td>8</td><td>17</td><td>3</td></tr>
-          <tr><td>MORILLOS VALDERRAMA, Santos octavio</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>PEREZ QUISPE, Samuel donato</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>PUMA HUAMAN, Beto</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>QUISPE CARITA, Angel javier</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>SALAS PILCO, Maria maura</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>TITO LIPA, José pánfilo</td><td>Sí</td><td>3</td><td>0</td><td>0</td></tr>
-          <tr><td>TUMI FIGUEROA, Ernesto nayer</td><td>Sí</td><td>6</td><td>23</td><td>3</td></tr>
-          <tr><td>VILLASANTE SARAVIA, Fredy heric</td><td>Sí</td><td>2</td><td>7</td><td>2</td></tr>
-          <tr><td>ALEMÁN GONZALES, Leonid</td><td>Sí</td><td>4</td><td>0</td><td>0</td></tr>
-          <tr><td>AZAÑERO DE A AGUIRRE, Emma orfelinda</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>CHOQUEJAHUA ACERO, Remo</td><td>Sí</td><td>2</td><td>2</td><td>1</td></tr>
-          <tr><td>HUATA PANCA, Percy</td><td>Sí</td><td>3</td><td>14</td><td>2</td></tr>
+          <tr><td>TORRES CRUZ, Fred</td><td>Sí</td><td>40</td><td>74</td><td>4</td></tr>
           <tr><td>IBÁÑEZ QUISPE, Vladimiro</td><td>Sí</td><td>21</td><td>52</td><td>5</td></tr>
-          <tr><td>PAREDES QUISPE, Juan reynaldo</td><td>Sí</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>PARI CONDORI, Elqui yeye</td><td>Sí</td><td>3</td><td>1</td><td>1</td></tr>
-          <tr><td>QUISPE MAMANI, Godofredo</td><td>Sí</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>QUISPE YAPO, Edgardo</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>ROQUE CLAROS, Roberto elvis</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>VARGAS VALVERDE, Confesor milan</td><td>No se encontró autor</td><td>-</td><td>-</td><td>-</td></tr>
-          <tr><td>TORRES CRUZ, Fredy heric</td><td>Sí</td><td>39</td><td>74</td><td>4</td></tr>
+          <!-- añade el resto de filas aquí -->
         </tbody>
       </table>
 
-      <!-- Estadística rápida -->
-      <h3 style="margin-top:14px">Resumen estadístico</h3>
-      <ul>
-        <li><strong>Total docentes:</strong> 31</li>
-        <li><strong>Docentes con cuenta Scopus (verificados como "Sí"):</strong> 18</li>
-        <li><strong>Docentes sin cuenta en Scopus:</strong> 13</li>
-        <li><strong>Índice H promedio (entre los que tienen valor numérico):</strong> aprox. 2.1</li>
-        <li><strong>Máximo índice H:</strong> 5 (Vladimiro Ibáñez Quispe)</li>
-      </ul>
-
-      <canvas id="scopusChart" width="700" height="200"></canvas>
-
-      <p><strong>Observación:</strong> varias filas aparecen con '-' cuando no se encontró autor en Scopus o no hay datos públicos.</p>
-      <p class="back"><a href="#" onclick="show('home');return false;">⬅ Volver al inicio</a></p>
+      <p style="margin-top:12px"><a class="download-link" href="#" data-download-name="docentes.csv">Descargar tabla (CSV)</a></p>
     </section>
 
-  </div>
+  </div> <!-- /sheet -->
 
   <script>
-    // Navegación: mostrar sección
+    // Navegación
     function show(id){
       document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
       const el = document.getElementById(id);
       if(el) el.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
     }
-
-    // Inicial: mostrar home
     show('home');
 
-    // Crear gráfico Scopus Sí/No y mostrar valores encima de barras
-    (function(){
-      const yes = 18;
-      const no = 13;
-      const ctx = document.getElementById('scopusChart').getContext('2d');
-      const data = {
-        labels: ['Cuenta Scopus: Sí', 'Cuenta Scopus: No'],
-        datasets: [{
-          label: 'Docentes',
-          data: [yes, no],
-          backgroundColor: ['#4da6ff','#cfefff']
-        }]
-      };
-      const config = {
-        type: 'bar',
-        data,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true },
-            title: { display: true, text: 'Distribución de docentes según Scopus' }
-          },
-          scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1 } }
-          }
-        },
-        plugins: [{
-          id: 'showValues',
-          afterDatasetsDraw(chart) {
-            const ctx = chart.ctx;
-            chart.data.datasets.forEach((dataset, i) => {
-              const meta = chart.getDatasetMeta(i);
-              meta.data.forEach((bar, index) => {
-                const data = dataset.data[index];
-                ctx.fillStyle = '#034a7a';
-                ctx.font = '600 13px Inter, Arial';
-                const x = bar.x;
-                const y = bar.y - 8;
-                ctx.textAlign = 'center';
-                ctx.fillText(String(data), x, y);
-              });
-            });
-          }
-        }]
-      };
-      new Chart(ctx, config);
+    // Utilidades de botones: copia, toggle, descarga
+    function sanitizeFilename(title){
+      return title.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_\-\.]/g,'').substring(0,50) || 'codigo';
+    }
+
+    document.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action], a[data-download-name]');
+      if(!btn) return;
+
+      // DOWNLOAD-LINK (enlaces generados)
+      if(btn.tagName.toLowerCase() === 'a' && btn.hasAttribute('data-download-name')){
+        e.preventDefault();
+        // intenta generar un archivo desde la sección activa: busca primer code visible
+        const active = document.querySelector('.section.active');
+        const code = active ? active.querySelector('pre code') : null;
+        const name = btn.getAttribute('data-download-name') || 'codigo.txt';
+        const text = code ? code.textContent : '# Archivo generado desde la página';
+        triggerDownload(name, text);
+        return;
+      }
+
+      // BOTONES dentro de cards
+      if(!btn) return;
+      const action = btn.getAttribute('data-action');
+      const card = btn.closest('.card');
+      if(!card) return;
+      const codeEl = card.querySelector('pre code');
+      const title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : 'codigo';
+
+      if(action === 'copy'){
+        const text = codeEl ? codeEl.textContent : '';
+        if(!text){ alert('No hay código para copiar'); return; }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(()=> {
+            const old = btn.textContent;
+            btn.textContent = 'Copiado ✓';
+            setTimeout(()=> btn.textContent = old, 1200);
+          }).catch(()=> fallbackCopy(text, btn));
+        } else fallbackCopy(text, btn);
+      } else if(action === 'toggle'){
+        const pre = card.querySelector('pre');
+        if(!pre) return;
+        const hidden = pre.classList.toggle('hidden');
+        btn.textContent = hidden ? 'Mostrar' : 'Ocultar';
+      } else if(action === 'download'){
+        const text = codeEl ? codeEl.textContent : '';
+        if(!text){ alert('No hay código para descargar'); return; }
+        const filename = sanitizeFilename(title) + '.py';
+        triggerDownload(filename, text);
+        const old = btn.textContent;
+        btn.textContent = 'Descargado ✓';
+        setTimeout(()=> btn.textContent = old, 1200);
+      }
+    });
+
+    function fallbackCopy(text, btn){
+      const t = document.createElement('textarea');
+      t.value = text;
+      t.style.position = 'fixed';
+      t.style.left = '-9999px';
+      document.body.appendChild(t);
+      t.select();
+      try {
+        document.execCommand('copy');
+        const old = btn.textContent;
+        btn.textContent = 'Copiado ✓';
+        setTimeout(()=> btn.textContent = old, 1200);
+      } catch(e){
+        alert('No se pudo copiar automáticamente. Copia manualmente.');
+      }
+      t.remove();
+    }
+
+    function triggerDownload(filename, content){
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Al cargar: si existen tarjetas sin toolbar, añade toolbar automáticamente
+    (function addToolbarToCards(){
+      document.querySelectorAll('.card').forEach(card=>{
+        if(!card.querySelector('.toolbar')){
+          const toolbar = document.createElement('div');
+          toolbar.className = 'toolbar';
+          toolbar.innerHTML = '<button class="btn btn-copy" data-action="copy">Copiar</button>' +
+                              '<button class="btn btn-toggle" data-action="toggle">Ocultar</button>' +
+                              '<button class="btn btn-download" data-action="download">Descargar .py</button>';
+          card.insertBefore(toolbar, card.querySelector('pre') || card.firstChild);
+        }
+      });
     })();
-    <section id="indiceh" class="section">
-      <h2>Autores destacados — Índice H &gt; 10</h2>
 
-      <p class="theory">
-        <strong>Concepto:</strong> El <strong>índice H</strong> (h-index) mide simultáneamente la productividad y el impacto de un autor: un investigador tiene índice H = <em>h</em> si dispone de <em>h</em> trabajos que han recibido, cada uno, al menos <em>h</em> citas. A continuación se muestran autores seleccionados con índice H mayor a 10. En cada cuadro encontrarás el resumen (totales) y, bajo ese resumen, una lista de publicaciones (sin cifras de citas por publicación).
-      </p>
-
-      <!-- Autor: Hinton -->
-      <div class="author-card" id="hinton">
-        <div class="author-meta">
-          <div class="title">Hinton, Geoffrey E.</div>
-          <div>Universidad de Toronto, Canadá</div>
-          <div style="margin-top:8px; font-size:13px; color:#385a78">Scopus ID: <strong>7006699573</strong></div>
-        </div>
-
-        <div style="flex:1">
-          <div class="metrics" aria-hidden="true">
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Citas totales</div>
-              <div style="font-size:18px">424.830</div>
-            </div>
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Documentos</div>
-              <div style="font-size:18px">271</div>
-            </div>
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Índice H</div>
-              <div style="font-size:18px">117</div>
-            </div>
-          </div>
-
-          <div style="margin-top:12px" class="pubs">
-            <strong>Publicaciones (selección):</strong>
-            <ul>
-              <li>Conferencia Nobel: Máquinas de Boltzmann</li>
-              <li>Gestión de riesgos extremos de IA en medio de un rápido progreso: la preparación requiere investigación y desarrollo técnico, así como una gobernanza adaptativa y proactiva.</li>
-              <li>Generalización robusta y eficiente en el uso de datos del aprendizaje automático autosupervisado para imágenes de diagnóstico</li>
-              <li>Cómo representar jerarquías parte-todo en una red neuronal</li>
-              <li>BITS ANALÓGICOS: Generación de datos discretos utilizando modelos de difusión con autocondicionamiento</li>
-              <li>Un marco generalista para la segmentación panóptica de imágenes y vídeos</li>
-              <li>Gradiente de escala hacia adelante con pérdidas locales</li>
-              <li>PIX2SEQ: un marco de modelado de lenguaje para la detección de objetos</li>
-              <li>Modelos lingüísticos de peso rápido de metaaprendizaje</li>
-              <li>Una interfaz de secuencia unificada para tareas de visión</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Autor: Bengio -->
-      <div class="author-card" id="bengio">
-        <div class="author-meta">
-          <div class="title">Bengio, Yoshua</div>
-          <div>Montreal Institute for Learning Algorithms, Canadá</div>
-          <div style="margin-top:8px; font-size:13px; color:#385a78">Scopus ID: <strong>7003958245</strong></div>
-        </div>
-
-        <div style="flex:1">
-          <div class="metrics" aria-hidden="true">
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Citas totales</div>
-              <div style="font-size:18px">400.851</div>
-            </div>
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Documentos</div>
-              <div style="font-size:18px">641</div>
-            </div>
-            <div>
-              <div style="font-size:12px; color:#0b3d66">Índice H</div>
-              <div style="font-size:18px">162</div>
-            </div>
-          </div>
-
-          <div style="margin-top:12px" class="pubs">
-            <strong>Publicaciones (selección):</strong>
-            <ul>
-              <li>Las ilusiones de la conciencia de la IA: la creencia de que la IA es consciente no está exenta de riesgos</li>
-              <li>¿Qué hace que una teoría de la conciencia no sea científica?</li>
-              <li>Aprendizaje automático causal para la genómica de células individuales</li>
-              <li>Descubrimiento causal en astrofísica: desentrañando la coevolución entre agujeros negros supermasivos y galaxias</li>
-              <li>Desaprendizaje de bajo consumo computacional mediante representaciones dispersas</li>
-              <!-- puedes agregar más títulos aquí sin la cifra de citas -->
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <p style="margin-top:10px; font-size:13px; color:#0b3d66">
-        <strong>Nota:</strong> las cifras mostradas arriba son los totales resumidos (citas totales, número de documentos y el índice H). En la lista de publicaciones no se muestran las citas por artículo, tal como solicitaste.
-      </p>
-
-      <a class="back" href="#" onclick="show('home');return false;">⬅ Volver al inicio</a>
-    </section>
+    // Añadir comportamiento para enlaces .download-link (genera un archivo con el primer code de la sección activa)
+    document.querySelectorAll('.download-link').forEach(a=>{
+      a.addEventListener('click', function(ev){
+        ev.preventDefault();
+        const name = a.getAttribute('data-download-name') || 'archivo.txt';
+        const section = a.closest('.section');
+        const code = section ? section.querySelector('pre code') : null;
+        const content = code ? code.textContent : '# Archivo generado';
+        triggerDownload(name, content);
+      });
+    });
   </script>
 </body>
 </html>
